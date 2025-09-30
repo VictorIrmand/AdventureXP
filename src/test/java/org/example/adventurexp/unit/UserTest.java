@@ -19,9 +19,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-    public class UserServiceTest {
+    public class UserTest {
         private List<User> mockUsers;
         private LocalDateTime createdTime;
 
@@ -37,9 +39,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
             createdTime = LocalDateTime.of(2024, 1, 1, 12, 0);
 
             mockUsers = new ArrayList<>();
-            mockUsers.add(new User(1, "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", "123", createdTime));
-            mockUsers.add(new User(2, "bob", "Dylan", Role.ADMIN, "Dylan@hotmail.dk", "123", createdTime));
-            mockUsers.add(new User(3, "charlie", "Nielsen", Role.RESERVATION_STAFF, "Nielsen@Gmail.com", "123", createdTime));
+            mockUsers.add(new User(1,"alicejensen", "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", "123", createdTime));
+            mockUsers.add(new User(2,"bobDylan", "bob", "Dylan", Role.ADMIN, "Dylan@hotmail.dk", "123", createdTime));
+            mockUsers.add(new User(3, "charlieNielsen", "charlie", "Nielsen", Role.RESERVATION_STAFF, "Nielsen@Gmail.com", "123", createdTime));
         }
         @Test
         void getUserById_shouldReturnUser_whenUserExists() {
@@ -59,6 +61,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
             Mockito.verify(userRepository, Mockito.times(1)).findById(2L);
 
         }
+        }
 
-    }
 

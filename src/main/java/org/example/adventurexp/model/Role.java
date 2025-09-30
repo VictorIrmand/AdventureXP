@@ -1,4 +1,8 @@
 package org.example.adventurexp.model;
 
-public enum role {
+public enum Role {
+    CUSTOMER,
+    RESERVATION_STAFF,
+    ACTIVITY_STAFF,
+    ADMIN
 }
