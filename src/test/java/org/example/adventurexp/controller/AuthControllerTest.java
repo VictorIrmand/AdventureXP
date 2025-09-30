@@ -49,6 +49,6 @@ class AuthControllerTest {
         ResponseEntity<?> response = authController.login(request);
 
         assertEquals(401, response.getStatusCodeValue());
-        assertEquals("Forkert brugernavn/email eller password", response.getBody());
+        assertEquals("Forkert brugernavn eller adgangskode", response.getBody());
     }
 }
