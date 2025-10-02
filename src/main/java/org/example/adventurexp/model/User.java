@@ -32,6 +32,7 @@ public class User {
 
     @Setter
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Setter
@@ -43,6 +44,7 @@ public class User {
     private String passwordHash;
 
     @CreationTimestamp
+    @Column
     private LocalDateTime createdAt;
 
     public String getPasswordHash() {

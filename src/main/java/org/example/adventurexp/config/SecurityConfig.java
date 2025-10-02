@@ -27,6 +27,7 @@ public class SecurityConfig {
         http
                 // Sessions i stedet for JWT
                 .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(a -> a
                         // offentlige sider
@@ -39,12 +40,7 @@ public class SecurityConfig {
                         // alt andet kræver login
                         .anyRequest().authenticated()
                 )
-                // aktiver standard form-login (kan skiftes til custom)
-                .formLogin(form -> form
-                        .loginPage("/login")        // hvis du vil have en custom login-side
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
-                )
+
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
                         .logoutSuccessUrl("/")
