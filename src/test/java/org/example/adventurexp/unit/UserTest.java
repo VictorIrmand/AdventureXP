@@ -23,44 +23,45 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-    public class UserTest {
-        private List<User> mockUsers;
-        private LocalDateTime createdTime;
+public class UserTest {
+    private List<User> mockUsers;
+    private LocalDateTime createdTime;
 
-        @Mock
-        private UserRepository userRepository;
+    @Mock
+    private UserRepository userRepository;
 
-        @InjectMocks
-        private UserService userService;
+    @InjectMocks
+    private UserService userService;
 
 
-        @BeforeEach
-        void setup() {
-            createdTime = LocalDateTime.of(2024, 1, 1, 12, 0);
+    @BeforeEach
+    void setup() {
+        createdTime = LocalDateTime.of(2024, 1, 1, 12, 0);
 
-            mockUsers = new ArrayList<>();
-            mockUsers.add(new User(1,"alicejensen", "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", "123", createdTime));
-            mockUsers.add(new User(2,"bobDylan", "bob", "Dylan", Role.ADMIN, "Dylan@hotmail.dk", "123", createdTime));
-            mockUsers.add(new User(3, "charlieNielsen", "charlie", "Nielsen", Role.RESERVATION_STAFF, "Nielsen@Gmail.com", "123", createdTime));
-        }
-        @Test
-        void getUserById_shouldReturnUser_whenUserExists() {
-            // Arrange
-            User bob = mockUsers.get(1);
+        mockUsers = new ArrayList<>();
+        mockUsers.add(new User(1, "alicejensen", "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", "123", createdTime));
+        mockUsers.add(new User(2, "bobDylan", "bob", "Dylan", Role.ADMIN, "Dylan@hotmail.dk", "123", createdTime));
+        mockUsers.add(new User(3, "charlieNielsen", "charlie", "Nielsen", Role.RESERVATION_STAFF, "Nielsen@Gmail.com", "123", createdTime));
+    }
 
-            //Mock behaviour
-            Mockito.when(userRepository.findById(2L)).thenReturn(Optional.of(bob));
+    @Test
+    void getUserById_shouldReturnUser_whenUserExists() {
+        // Arrange
+        User bob = mockUsers.get(1);
 
-            // ACT
-            User result = userService.getUserById(2);
+        //Mock behaviour
+        Mockito.when(userRepository.findById(2L)).thenReturn(Optional.of(bob));
 
-            //ASSERT
-            assertEquals(bob,result);
+        // ACT
+        User result = userService.getUserById(2);
 
-            // Verify
-            Mockito.verify(userRepository, Mockito.times(1)).findById(2L);
+        //ASSERT
+        assertEquals(bob, result);
 
-        }
-        }
+        // Verify
+        Mockito.verify(userRepository, Mockito.times(1)).findById(2L);
+
+    }
+}
 
 

@@ -2,6 +2,8 @@ package org.example.adventurexp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.LoginRequestDTO;
+import org.example.adventurexp.dto.UserDTO;
+import org.example.adventurexp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,16 +11,18 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
-    public ResponseEntity<?> login (@RequestBody LoginRequestDTO requestDTO){
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -31,5 +35,16 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Forkert brugernavn eller adgangskode");
         }
+    }
+
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getMe() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+
+        UserDTO userDTO = userService.getUserByUsername(name);
+        return ResponseEntity.ok().body(userDTO);
     }
 }
