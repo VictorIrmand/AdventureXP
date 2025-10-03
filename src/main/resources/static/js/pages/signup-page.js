@@ -1,3 +1,4 @@
+import {signUp} from "../service/auth-service.js";
 
 
 export function mount() {
@@ -57,8 +58,8 @@ export function mount() {
 
         const signUpRequestDTO = {
             username: username,
-            firstname: firstName,
-            lastname: lastName,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             rawPassword: rawPassword
         }

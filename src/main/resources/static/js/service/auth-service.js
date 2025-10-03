@@ -10,7 +10,7 @@ export async function login(loginRequestDTO) {
         body: JSON.stringify(loginRequestDTO)
     });
 
-    if (response.status === 403) {
+    if (response.status === 401) {
         console.log("fejlet validation");
     }
 
@@ -18,4 +18,25 @@ export async function login(loginRequestDTO) {
         console.log("det virker");
     }
 }
+
+export async function signUp(signUpRequestDTO) {
+    const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body:JSON.stringify(signUpRequestDTO)
+    });
+
+    if(response.status === 400){
+        console.log(await response.text())
+    }
+
+    if(response.ok) {
+        console.log("Det virker")
+    }
+}
+
+
 
