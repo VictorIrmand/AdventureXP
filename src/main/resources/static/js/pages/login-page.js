@@ -1,4 +1,5 @@
 import {login} from "../service/auth-service.js";
+import {navigate} from "../utility/router.js";
 
 export function mount() {
     /* language=HTML */
@@ -18,6 +19,8 @@ export function mount() {
                 </div>
 
                 <button id="login-btn" type="submit">Login</button>
+                
+                <button id="signup-link" type="submit">Ny bruger</button>
 
             </div>
 
@@ -41,6 +44,10 @@ export function mount() {
 
         await login(loginRequestDTO);
     })
+
+    const signupBtn = document.querySelector("#signup-link");
+
+    signupBtn.addEventListener("click", () => navigate("/signup"))
 
     function unmount() {
         document.querySelector("#app-main").innerHTML = "";
