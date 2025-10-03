@@ -22,6 +22,11 @@ export function mount() {
                 
                 <button id="signup-link" type="submit">Ny bruger</button>
 
+
+                <div class="error-container">
+
+                </div>
+
             </div>
 
         </div>

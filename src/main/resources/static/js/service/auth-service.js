@@ -1,3 +1,5 @@
+import {showError} from "../utility/error-message.js";
+import {navigate} from "../utility/router.js";
 
 export async function login(loginRequestDTO) {
 
@@ -12,10 +14,12 @@ export async function login(loginRequestDTO) {
 
     if (response.status === 401) {
         console.log("fejlet validation");
+        showError("Forkert brugernavn eller adgangskode");
     }
 
     if (response.ok) {
         console.log("det virker");
+        navigate("/homepage");
     }
 }
 
@@ -26,14 +30,16 @@ export async function signUp(signUpRequestDTO) {
         headers: {
             "Content-type": "application/json",
         },
-        body:JSON.stringify(signUpRequestDTO)
+        body: JSON.stringify(signUpRequestDTO)
     });
 
-    if(response.status === 400){
-        console.log(await response.text())
+    if (response.status === 400) {
+        const errorText = await response.text();
+        console.log(errorText)
+        showError(errorText);
     }
 
-    if(response.ok) {
+    if (response.ok) {
         console.log("Det virker")
     }
 }

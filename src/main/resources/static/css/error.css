@@ -1,0 +1,13 @@
+
+/* error p-element inde i en error-container på hver page*/
+
+
+.active-error {
+    display: inline-block;
+    color: darkred;
+}
+
+
+.error-container {
+
+}

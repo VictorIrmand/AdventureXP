@@ -16,13 +16,13 @@ export function mount() {
                 </div>
 
                 <div class="form-group">
-                    <label for="firstname">First name:</label>
-                    <input id="firstname" type="text" required>
+                    <label for="firstName">First name:</label>
+                    <input id="firstName" type="text" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="lastname">Last name:</label>
-                    <input id="lastname" type="text" required>
+                    <label for="lastName">Last name:</label>
+                    <input id="lastName" type="text" required>
                 </div>
 
                 <div class="form-group">
@@ -36,6 +36,11 @@ export function mount() {
 
                 <button id="register-btn" type="submit">Register</button>
 
+                
+                <div class="error-container">
+                    
+                </div>
+
 
             </div>
         </div>
@@ -47,9 +52,9 @@ export function mount() {
         e.preventDefault();
         const username = document.querySelector("#username").value;
 
-        const firstName = document.querySelector("#firstname").value;
+        const firstName = document.querySelector("#firstName").value;
 
-        const lastName = document.querySelector("#lastname").value;
+        const lastName = document.querySelector("#lastName").value;
 
         const email = document.querySelector("#email").value;
 

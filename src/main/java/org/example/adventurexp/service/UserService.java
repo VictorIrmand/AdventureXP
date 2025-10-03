@@ -78,8 +78,10 @@ public class UserService {
                     signUpRequestDTO.lastName(),
                     signUpRequestDTO.email()
             );
+
             user.changeRole(Role.CUSTOMER); // Altid en customer
             user.changePasswordHash(hashedPassword);
+
              return DTOMapper.toDTO(userRepository.save(user));
         } catch (DataIntegrityViolationException e) {
             logger.error("User with name; {} contains database constrains violations", signUpRequestDTO.username());

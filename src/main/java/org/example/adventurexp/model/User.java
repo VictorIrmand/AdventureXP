@@ -47,7 +47,13 @@ public class User {
     private LocalDateTime createdAt;
 
 
-    public User(String username, String s, String s1, String email) {
+
+    // signup constructor
+    public User(String username, String firstName, String lastName, String email) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public String getPasswordHash() {
