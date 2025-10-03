@@ -1,7 +1,9 @@
 package org.example.adventurexp.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.LoginRequestDTO;
+import org.example.adventurexp.dto.SignUpRequestDTO;
 import org.example.adventurexp.dto.UserDTO;
 import org.example.adventurexp.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -47,4 +49,12 @@ public class AuthController {
         UserDTO userDTO = userService.getUserByUsername(name);
         return ResponseEntity.ok().body(userDTO);
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@Valid SignUpRequestDTO signUpRequestDTO) {
+        userService.signUp(signUpRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+    }
+
 }

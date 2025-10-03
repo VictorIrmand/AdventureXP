@@ -30,7 +30,6 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Setter
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -47,11 +46,19 @@ public class User {
     @Column
     private LocalDateTime createdAt;
 
+
+    public User(String username, String s, String s1, String email) {
+    }
+
     public String getPasswordHash() {
         return passwordHash;
     }
 
     public void changePasswordHash(String password) {
         this.passwordHash = password;
+    }
+
+    public void changeRole(Role role) {
+        this.role = role;
     }
 }
