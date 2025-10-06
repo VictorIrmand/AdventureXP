@@ -1,5 +1,6 @@
 package org.example.adventurexp.unit;
 
+import org.example.adventurexp.dto.AdminRegisterSignUpDTO;
 import org.example.adventurexp.dto.SignUpRequestDTO;
 import org.example.adventurexp.dto.UserDTO;
 import org.example.adventurexp.model.Role;
@@ -138,6 +139,43 @@ public class UserTest {
 
         // Verify at save blev kaldt
         Mockito.verify(userRepository, Mockito.times(1)).save(any());
+    }
+
+    @Test
+    void adminSignUp_SavesEmployeeWithRole_WhenUserIsValid() {
+        //Arrange
+        UserDTO extectedDTO = new UserDTO(
+                6, "boJensen", "Bo", "Jensen",
+                Role.RESERVATION_STAFF, "bojensen@gmail.com",
+                createdTime
+        );
+        AdminRegisterSignUpDTO userSignUp = new AdminRegisterSignUpDTO(
+                "boJensen", "Bo", "Jensen",
+                "bojensen@gmail.com", Role.RESERVATION_STAFF,
+                "123"
+        );
+
+        User savedEntity = new User (
+                6, "boJensen", "Bo", "Jensen",
+                Role.RESERVATION_STAFF,
+                "bojensen@gmail.com", "123",
+                createdTime
+        );
+
+        // Mock repository til at retunere en User
+        Mockito.when(userRepository.save(any())).thenReturn(savedEntity);
+
+        // ACT
+        UserDTO saved = userService.adminSignUp(userSignUp);
+
+        // Assert - Tjekker om DTO'en findes og har den rigtige rolle
+        assertEquals(extectedDTO,saved);
+        assertEquals(Role.RESERVATION_STAFF,saved.role());
+
+        // Verify at save blev kaldt
+        Mockito.verify(userRepository, Mockito.times(1)).save(any());
+
+
     }
 
 

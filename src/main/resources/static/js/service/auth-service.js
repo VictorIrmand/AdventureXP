@@ -44,5 +44,26 @@ export async function signUp(signUpRequestDTO) {
     }
 }
 
+export async function adminSignUp(adminSignUpRequestDTO) {
+    const response = await fetch("/api/admin/register", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(adminSignUpRequestDTO)
+    });
+
+    if (response.status === 400) {
+        const errorText = await response.text();
+        console.log(errorText);
+        showError(errorText);
+    }
+
+    if (response.ok) {
+        console.log("Det virker")
+    }
+}
+
 
 
