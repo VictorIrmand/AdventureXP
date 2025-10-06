@@ -1,6 +1,7 @@
 const routes = {
     "/": () => import("../pages/login-page.js"),
-    "/register": () => import ("../pages/register-page.js")
+    "/signup": () => import ("../pages/signup-page.js"),
+    "/homepage": () => import ("../pages/home-page.js")
 }
 
 // currentUnmount bliver returneret i mount og gør at en side fjerner sig selv.
@@ -30,6 +31,7 @@ export async function route(path = location.pathname, state = null) {
 
 // manipulerer url og kører mount. bruges når man skal navigere i appen.
 export function navigate(path, state = null) {
+    console.log("navigate KALDT med:", path);
     if (location.pathname === path) {
         console.log("Er allerede på: ", path, " -> vi skipper navigate");
         return;

@@ -1,6 +1,5 @@
 package org.example.adventurexp.config;
 
-
 import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -31,21 +30,25 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(a -> a
                         // offentlige sider
-                        .requestMatchers("/", "/index.html", "/favicon.ico", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/", "/signup", "/index.html", "/favicon.ico", "/css/**", "/js/**", "/images/**").permitAll()
                         // auth endpoints
-                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
                         // rolle-beskyttede endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                         // alt andet kræver login
                         .anyRequest().authenticated()
                 )
-
+                .exceptionHandling(eh -> eh
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/"); // altid redirect til login-siden
+                        })
+                )
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID") // hvis du vil rydde session-cookien
+                        .deleteCookies("JSESSIONID") // rydder session-cookien
                         .permitAll()
                 );
 
