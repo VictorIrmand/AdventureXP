@@ -1,6 +1,7 @@
 package org.example.adventurexp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.adventurexp.dto.AdminRegisterSignUpDTO;
 import org.example.adventurexp.dto.SignUpRequestDTO;
 import org.example.adventurexp.dto.UserDTO;
 import org.example.adventurexp.exception.UserNotFoundException;
@@ -92,8 +93,31 @@ public class UserService {
             logger.error("Data access error while saving user; {}", signUpRequestDTO.username());
             throw new IllegalStateException("Database error; " + e.getMessage());
         }
+    }
 
+    public UserDTO adminSignUp(AdminRegisterSignUpDTO adminRegisterSignUpDTO) {
+        try {
+            String hashedPassword = passwordEncoder.encode(adminRegisterSignUpDTO.rawPassword());
 
+            User user = new User (
+                    adminRegisterSignUpDTO.username(),
+                    adminRegisterSignUpDTO.firstName(),
+                    adminRegisterSignUpDTO.lastName(),
+                    adminRegisterSignUpDTO.email()
+            );
+            user.changeRole(adminRegisterSignUpDTO.role());
+            user.changePasswordHash(hashedPassword);
+
+            return DTOMapper.toDTO(userRepository.save(user));
+        } catch (DataIntegrityViolationException e) {
+            logger.error("Employee with name; {} contains database constrains violations", adminRegisterSignUpDTO.username());
+            throw new IllegalStateException("Database constrain violation; " + e.getMessage());
+        }
+
+        catch (DataAccessException e) {
+            logger.error("data access error while saving employee; {}", adminRegisterSignUpDTO.username());
+            throw new IllegalStateException("Database error; " + e.getMessage());
+        }
     }
 
 }
