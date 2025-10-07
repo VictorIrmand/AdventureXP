@@ -1,5 +1,6 @@
 import {showError} from "../utility/error-message.js";
 import {navigate} from "../utility/router.js";
+import {apiGetJson} from "../utility/api.js";
 
 export async function login(loginRequestDTO) {
 
@@ -19,7 +20,7 @@ export async function login(loginRequestDTO) {
 
     if (response.ok) {
         console.log("det virker");
-        navigate("/homepage");
+        navigate("/home");
     }
 }
 
@@ -44,25 +45,8 @@ export async function signUp(signUpRequestDTO) {
     }
 }
 
-export async function adminSignUp(adminSignUpRequestDTO) {
-    const response = await fetch("/api/admin/register", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify(adminSignUpRequestDTO)
-    });
-
-    if (response.status === 400) {
-        const errorText = await response.text();
-        console.log(errorText);
-        showError(errorText);
-    }
-
-    if (response.ok) {
-        console.log("Det virker")
-    }
+export async function getMe() {
+    return await apiGetJson("/api/auth/me");
 }
 
 

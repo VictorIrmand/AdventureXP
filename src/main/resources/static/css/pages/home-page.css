@@ -1,0 +1,20 @@
+.home-page {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.home-page .left {
+    display: flex;
+    flex: 2;
+}
+
+.home-page .center-right {
+
+    display: flex;
+    flex: 6;
+}
+
+

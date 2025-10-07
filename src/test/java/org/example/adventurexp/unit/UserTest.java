@@ -1,6 +1,5 @@
 package org.example.adventurexp.unit;
 
-import org.example.adventurexp.dto.AdminRegisterSignUpDTO;
 import org.example.adventurexp.dto.SignUpRequestDTO;
 import org.example.adventurexp.dto.UserDTO;
 import org.example.adventurexp.model.Role;
@@ -21,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,25 +34,29 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserTest {
     private List<User> mockUsers;
+
     private LocalDateTime createdTime;
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    private String formattedTime;
+
     private List<UserDTO> mockUsersDTOList;
-
-    @Mock
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
 
     @InjectMocks
     private UserService userService;
 
     @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
     private UserRepository userRepository;
-
-
 
 
     @BeforeEach
     void setup() {
         createdTime = LocalDateTime.of(2024, 1, 1, 12, 0);
+        formattedTime = createdTime.format(formatter);
         // Det her er entiteter
         mockUsers = new ArrayList<>();
         mockUsers.add(new User(1, "alicejensen", "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", "123", createdTime));
@@ -61,9 +65,9 @@ public class UserTest {
 
         // Det her er DTO'er
         mockUsersDTOList = new ArrayList<>();
-        mockUsersDTOList.add(new UserDTO(1, "alicejensen", "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", createdTime));
-        mockUsersDTOList.add(new UserDTO(2, "bobDylan", "bob", "Dylan", Role.ADMIN, "Dylan@hotmail.dk", createdTime));
-        mockUsersDTOList.add(new UserDTO(3, "charlieNielsen", "charlie", "Nielsen", Role.RESERVATION_STAFF, "Nielsen@Gmail.com", createdTime));
+        mockUsersDTOList.add(new UserDTO(1, "alicejensen", "alice", "Jensen", Role.ACTIVITY_STAFF, "Martin@gmail.com", formattedTime));
+        mockUsersDTOList.add(new UserDTO(2, "bobDylan", "bob", "Dylan", Role.ADMIN, "Dylan@hotmail.dk", formattedTime));
+        mockUsersDTOList.add(new UserDTO(3, "charlieNielsen", "charlie", "Nielsen", Role.RESERVATION_STAFF, "Nielsen@Gmail.com", formattedTime));
 
     }
 
@@ -112,7 +116,7 @@ public class UserTest {
         UserDTO expectedDTO = new UserDTO(
                 4, "Karstengammel", "Karsten", "Gammel",
                 Role.CUSTOMER, "karstengammel@email.com",
-                createdTime
+                formattedTime
         );
 
         SignUpRequestDTO userSignUp = new SignUpRequestDTO(
@@ -140,45 +144,6 @@ public class UserTest {
         // Verify at save blev kaldt
         Mockito.verify(userRepository, Mockito.times(1)).save(any());
     }
-
-    @Test
-    void adminSignUp_SavesEmployeeWithRole_WhenUserIsValid() {
-        //Arrange
-        UserDTO extectedDTO = new UserDTO(
-                6, "boJensen", "Bo", "Jensen",
-                Role.RESERVATION_STAFF, "bojensen@gmail.com",
-                createdTime
-        );
-        AdminRegisterSignUpDTO userSignUp = new AdminRegisterSignUpDTO(
-                "boJensen", "Bo", "Jensen",
-                "bojensen@gmail.com", Role.RESERVATION_STAFF,
-                "123"
-        );
-
-        User savedEntity = new User (
-                6, "boJensen", "Bo", "Jensen",
-                Role.RESERVATION_STAFF,
-                "bojensen@gmail.com", "123",
-                createdTime
-        );
-
-        // Mock repository til at retunere en User
-        Mockito.when(userRepository.save(any())).thenReturn(savedEntity);
-
-        // ACT
-        UserDTO saved = userService.adminSignUp(userSignUp);
-
-        // Assert - Tjekker om DTO'en findes og har den rigtige rolle
-        assertEquals(extectedDTO,saved);
-        assertEquals(Role.RESERVATION_STAFF,saved.role());
-
-        // Verify at save blev kaldt
-        Mockito.verify(userRepository, Mockito.times(1)).save(any());
-
-
-    }
-
-
 }
 
 
