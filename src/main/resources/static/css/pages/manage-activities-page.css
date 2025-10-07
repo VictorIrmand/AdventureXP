@@ -1,0 +1,55 @@
+.manage-activities-page {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.manage-activities-page .left {
+    display: flex;
+    flex: 2;
+}
+
+.manage-activities-page .center-right {
+
+    display: flex;
+    flex: 6;
+
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.create-activity-btn {
+    background-color: #4eaa79;   /* grøn */
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    margin-top: 3rem;
+}
+
+.create-activity-btn:hover {
+    background-color: #16a34a;
+}
+
+.create-activity-btn:active {
+    background-color: #15803d;
+}
+
+.edit-activities {
+    width: 95%;
+    display: flex;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    margin-top: 3rem;
+    align-items: center;
+    flex-direction: column;
+    min-height: 30rem;
+    padding-top: 2rem;
+}

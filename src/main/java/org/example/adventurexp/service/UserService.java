@@ -1,23 +1,21 @@
 package org.example.adventurexp.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.adventurexp.dto.AdminRegisterSignUpDTO;
-import org.example.adventurexp.dto.SignUpRequestDTO;
-import org.example.adventurexp.dto.UserDTO;
-import org.example.adventurexp.exception.UserNotFoundException;
+import org.example.adventurexp.dto.user.AdminRegisterSignUpDTO;
+import org.example.adventurexp.dto.user.SignUpRequestDTO;
+import org.example.adventurexp.dto.user.UserDTO;
+import org.example.adventurexp.exception.NotFoundException;
 import org.example.adventurexp.mapper.DTOMapper;
 import org.example.adventurexp.model.Role;
 import org.example.adventurexp.model.User;
 import org.example.adventurexp.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -26,14 +24,13 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-
     public UserDTO getUserDTOById(long id) {
         try {
 
             User foundUser = userRepository.findById(id)
-                    .orElseThrow(() -> {
-                        return new UserNotFoundException("Fail to find user with id: " + id);
-                    });
+                    .orElseThrow(() ->
+                            new NotFoundException("Fail to find user with id: " + id)
+                    );
 
             return DTOMapper.toDTO(foundUser);
         } catch (DataAccessException e) {
@@ -47,7 +44,7 @@ public class UserService {
 
             User foundUser = userRepository.findByUsername(username)
                     .orElseThrow(() -> {
-                        return new UserNotFoundException("Fail to find user with username: " + username);
+                        return new NotFoundException("Fail to find user with username: " + username);
                     });
 
             return DTOMapper.toDTO(foundUser);
@@ -62,7 +59,7 @@ public class UserService {
 
             return userRepository.findById(id)
                     .orElseThrow(() -> {
-                        return new UserNotFoundException("Fail to find user!");
+                        return new NotFoundException("Fail to find user!");
                     });
         } catch (DataAccessException e) {
             logger.error("Database problem: {}", e.getMessage());
@@ -70,7 +67,7 @@ public class UserService {
         }
     }
 
-    public UserDTO signUp(SignUpRequestDTO signUpRequestDTO){
+    public UserDTO signUp(SignUpRequestDTO signUpRequestDTO) {
         try {
             String hashedPassword = passwordEncoder.encode(signUpRequestDTO.rawPassword());
             User user = new User(
@@ -83,13 +80,15 @@ public class UserService {
             user.changeRole(Role.CUSTOMER); // Altid en customer
             user.changePasswordHash(hashedPassword);
 
-             return DTOMapper.toDTO(userRepository.save(user));
+
+            UserDTO saved = DTOMapper.toDTO(userRepository.save(user));
+            logger.info("User with id: {} was signed up successfully", saved.id());
+            return saved;
+
         } catch (DataIntegrityViolationException e) {
             logger.error("User with name; {} contains database constrains violations", signUpRequestDTO.username());
             throw new IllegalStateException("Database constrain violation; " + e.getMessage());
-        }
-
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error("Data access error while saving user; {}", signUpRequestDTO.username());
             throw new IllegalStateException("Database error; " + e.getMessage());
         }
@@ -99,7 +98,7 @@ public class UserService {
         try {
             String hashedPassword = passwordEncoder.encode(adminRegisterSignUpDTO.rawPassword());
 
-            User user = new User (
+            User user = new User(
                     adminRegisterSignUpDTO.username(),
                     adminRegisterSignUpDTO.firstName(),
                     adminRegisterSignUpDTO.lastName(),
@@ -112,9 +111,7 @@ public class UserService {
         } catch (DataIntegrityViolationException e) {
             logger.error("Employee with name; {} contains database constrains violations", adminRegisterSignUpDTO.username());
             throw new IllegalStateException("Database constrain violation; " + e.getMessage());
-        }
-
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error("data access error while saving employee; {}", adminRegisterSignUpDTO.username());
             throw new IllegalStateException("Database error; " + e.getMessage());
         }

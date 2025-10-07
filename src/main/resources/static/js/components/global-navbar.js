@@ -1,4 +1,7 @@
-import {getMe} from "../service/auth-service.js";
+import {getMe, logout} from "../service/auth-service.js";
+import {navigate} from "../utility/router.js";
+import {updateNavHighlight} from "../utility/highlight.js";
+
 
 
 export async function showGlobalNavbar(containerEl) {
@@ -40,9 +43,19 @@ export async function showGlobalNavbar(containerEl) {
 
     const currentUserDto = await getMe();
 
+    const logoutEl = document.querySelector(".log-out");
+
+    logoutEl.addEventListener("click", e => {
+        logout();
+        navigate("/");
+    })
+
     console.log(currentUserDto);
     const navEl = containerEl.querySelector(".main-nav");
     showNavLinks(navEl, currentUserDto.role);
+
+
+    updateNavHighlight(location.pathname);
 
     const profile = containerEl.querySelector(".user-section-profile");
     showProfileInfo(profile, currentUserDto);
@@ -62,12 +75,22 @@ function showNavLinks(targetEl, role) {
 
     if (role === "ADMIN") {
         targetEl.innerHTML = `
+            <div><i class="fa-solid fa-house"></i><a href="/home">Home</a></div>
             <div><i class="fa-solid fa-gauge"></i><a href="/dashboard">Dashboard</a></div>
-            <div><i class="fa-regular fa-calendar"></i><a href="/reservations">Manage Reservations</a></div>
-            <div><i class="fa-solid fa-dice"></i><a href="/activities">Manage Activities</a></div>
+            <div><i class="fa-regular fa-calendar"></i><a href="/manage-reservations">Manage Reservations</a></div>
+            <div><i class="fa-solid fa-dice"></i><a href="/manage-activities">Manage Activities</a></div>
             <div><i class="fa-regular fa-user"></i><a href="/users">Manage users</a></div>
         `;
     }
+
+    targetEl.querySelectorAll("div").forEach(div => {
+        div.addEventListener("click", e => {
+            const link = div.querySelector("a");
+            if (!link) return;
+            e.preventDefault();
+            navigate(link.getAttribute("href"));
+        });
+    });
 }
 
 

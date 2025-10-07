@@ -1,0 +1,92 @@
+.create-activity-page {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.create-activity-page .left {
+    display: flex;
+    flex: 2;
+}
+
+.create-activity-page .center-right {
+
+    display: flex;
+    flex: 6;
+
+    align-items: center;
+    flex-direction: column;
+}
+
+.center-right .create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 90%;
+    margin-top: 2rem;
+    padding: 5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    align-items: center;
+    overflow: scroll;
+    height: fit-content;
+
+}
+
+.center-right .create-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 80%;
+}
+
+.center-right .create-form label {
+    font-weight: 500;
+
+    color: #374151;
+}
+
+.center-right .create-form input,
+.center-right .create-form textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.center-right .create-form input:focus,
+.center-right .create-form textarea:focus {
+    border-color: #3b82f6; /* blå highlight */
+}
+
+.center-right .create-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.center-right #create-btn {
+    background-color: #22c55e;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    width: 50%;
+    height: 14rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-right  #create-btn:hover {
+    background-color: #16a34a;
+}

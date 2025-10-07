@@ -1,7 +1,6 @@
 package org.example.adventurexp.controller;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.example.adventurexp.dto.LoginRequestDTO;
+import org.example.adventurexp.dto.user.LoginRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

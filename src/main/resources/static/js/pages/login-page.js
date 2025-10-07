@@ -19,11 +19,11 @@ export function mount() {
                 </div>
 
                 <button id="login-btn" type="submit">Login</button>
-                
+
                 <button id="signup-link" type="submit">Ny bruger</button>
 
 
-                <div class="error-container">
+                <div class="message-container">
 
                 </div>
 

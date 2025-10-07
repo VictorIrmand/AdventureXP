@@ -1,8 +1,6 @@
-package org.example.adventurexp.dto;
+package org.example.adventurexp.dto.user;
 
 import org.example.adventurexp.model.Role;
-
-import java.time.LocalDateTime;
 
 public record UserDTO (
         long id,

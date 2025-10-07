@@ -2,9 +2,9 @@ package org.example.adventurexp.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.adventurexp.dto.LoginRequestDTO;
-import org.example.adventurexp.dto.SignUpRequestDTO;
-import org.example.adventurexp.dto.UserDTO;
+import org.example.adventurexp.dto.user.LoginRequestDTO;
+import org.example.adventurexp.dto.user.SignUpRequestDTO;
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.AccessDeniedException;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,7 +56,13 @@ public class AuthController {
     public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
         userService.signUp(signUpRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDenied(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+    }
+
+
 
 }
