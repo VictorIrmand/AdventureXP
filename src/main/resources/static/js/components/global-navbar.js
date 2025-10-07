@@ -1,4 +1,4 @@
-import {getMe} from "../service/auth-service.js";
+import {getMe, logout} from "../service/auth-service.js";
 import {navigate} from "../utility/router.js";
 import {updateNavHighlight} from "../utility/highlight.js";
 
@@ -42,6 +42,13 @@ export async function showGlobalNavbar(containerEl) {
 
 
     const currentUserDto = await getMe();
+
+    const logoutEl = document.querySelector(".log-out");
+
+    logoutEl.addEventListener("click", e => {
+        logout();
+        navigate("/");
+    })
 
     console.log(currentUserDto);
     const navEl = containerEl.querySelector(".main-nav");

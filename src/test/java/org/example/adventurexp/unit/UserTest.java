@@ -1,7 +1,7 @@
 package org.example.adventurexp.unit;
 
-import org.example.adventurexp.dto.SignUpRequestDTO;
-import org.example.adventurexp.dto.UserDTO;
+import org.example.adventurexp.dto.user.SignUpRequestDTO;
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.model.Role;
 import org.example.adventurexp.model.User;
 
@@ -14,9 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -28,7 +25,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)

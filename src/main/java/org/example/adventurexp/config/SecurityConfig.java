@@ -28,31 +28,42 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
 
-                // Sørg for at Spring gemmer authentication automatisk i sessionen
                 .securityContext(context -> context.requireExplicitSave(false))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
 
                 .authorizeHttpRequests(a -> a
-                        // Offentlige filer og sider
-                        .requestMatchers("/", "/signup", "/index.html", "/favicon.ico",
-                                "/css/**", "/js/**", "/images/**").permitAll()
-                        // Åbne auth endpoints
-                        .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
-                        // Rollebeskyttede endpoints
-                        .requestMatchers("/api/admin/**","/manage-activities", "/create-activity").hasRole("ADMIN")
+                        // 🟢 FRONTEND MÅ ALTID LOADES
+                        .requestMatchers(
+                                "/", "/index.html",
+                                "/signup", "/login",
+                                "/home", "/homepage",
+                                "/css/**", "/js/**", "/images/**", "/favicon.ico"
+                        ).permitAll()
+
+                        // 🟢 Auth endpoints (login/signup/logout)
+                        .requestMatchers("/api/auth/**").permitAll()
+
+                        // 🟡 API endpoints (beskyttede)
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                        // Alt andet kræver login
+
+                        // 🔒 ALT ANDET KRÆVER LOGIN
                         .anyRequest().authenticated()
                 )
 
-                // Returnér 401 i stedet for redirect ved uautoriseret API-adgang
+                // 🟢 Håndtér API-fejl – men IKKE på frontend-views
                 .exceptionHandling(eh -> eh
                         .authenticationEntryPoint((req, res, ex) -> {
-                            res.setStatus(401);
-                            res.setContentType("application/json");
-                            res.getWriter().write("{\"error\":\"unauthorized\"}");
+                            if (req.getRequestURI().startsWith("/api/")) {
+                                res.setStatus(401);
+                                res.setContentType("application/json");
+                                res.getWriter().write("{\"error\":\"unauthorized\"}");
+                            } else {
+                                // Hvis det er frontend-route (/home fx) → send bare index.html
+                                req.getRequestDispatcher("/index.html").forward(req, res);
+                            }
                         })
                 )
 

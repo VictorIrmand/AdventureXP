@@ -6,9 +6,9 @@ export function mount () {
     /* language=HTML */
 
     document.querySelector("#app-main").innerHTML = `
-    
+
         <div class="register-page">
-            
+
             <div class="register-form">
 
                 <div class="form-group">
@@ -40,18 +40,18 @@ export function mount () {
                         <option value="RESERVATION_STAFF">Reservations personale</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input id="password" type="password" required>
                 </div>
-                
+
                 <button id="register-btn" type="submit">Register</button>
 
-                <div class="error-container">
-                    
+                <div class="message-container">
+
                 </div>
-                
+
             </div>
         </div>
     `

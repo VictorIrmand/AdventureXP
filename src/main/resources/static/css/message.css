@@ -7,7 +7,12 @@
     color: darkred;
 }
 
+.active-info {
+    display: inline-block;
+    color: green;
+}
 
-.error-container {
+
+.message-container {
 
 }

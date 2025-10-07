@@ -1,26 +1,52 @@
 package org.example.adventurexp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Table(name = "activities")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String name;
-    @NotBlank
+
+    @Column(nullable = false)
+    @Lob
     private String description;
-    @NotBlank
+
+    @Column(nullable = false)
     private int ageLimit;
-    @NotBlank
-    private double price;
-    @NotBlank
-   private int participants; // Valideret i DTO.
+
+    @Column(nullable = false)
+    private double pricePerMinutePerPerson;
+
+    @Column(nullable = false)
+    private int maxParticipants;
+
+    @Column
+    private int minParticipants;
+
+
+    public Activity(String name, String description, int ageLimit, double pricePerMinutePerPerson, int maxParticipants, int minParticipants) {
+        this.name = name;
+        this.description = description;
+        this.ageLimit = ageLimit;
+        this.pricePerMinutePerPerson = pricePerMinutePerPerson;
+        this.maxParticipants = maxParticipants;
+        this.minParticipants = minParticipants;
+    }
+
+
 }

@@ -4,7 +4,8 @@ const routes = {
     "/": () => import("../pages/login-page.js"),
     "/signup": () => import ("../pages/signup-page.js"),
     "/home": () => import ("../pages/home-page.js"),
-    "/manage-activities": () => import ("../pages/admin/manage-activities-page.js")
+    "/manage-activities": () => import ("../pages/admin/manage-activities-page.js"),
+    "/create-activity": () => import("../pages/admin/create-activity-page.js")
 }
 
 // currentUnmount bliver returneret i mount og gør at en side fjerner sig selv.

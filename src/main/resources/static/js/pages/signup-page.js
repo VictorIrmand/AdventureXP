@@ -36,9 +36,9 @@ export function mount() {
 
                 <button id="register-btn" type="submit">Register</button>
 
-                
-                <div class="error-container">
-                    
+
+                <div class="message-container">
+
                 </div>
 
 

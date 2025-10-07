@@ -1,10 +1,11 @@
-package org.example.adventurexp.dto;
+package org.example.adventurexp.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.example.adventurexp.model.Role;
 
-public record SignUpRequestDTO(
+public record AdminRegisterSignUpDTO(
         @NotBlank(message = "Username must not be blank")
         @Size(min = 3, max = 50, message = "Username length must be between 3 and 50 characters")
         String username,
@@ -22,5 +23,8 @@ public record SignUpRequestDTO(
         @Email(message = "Must be a valid e-mail")
         String email,
 
+        Role role,
+
         String rawPassword
-) { }
+) {
+}
