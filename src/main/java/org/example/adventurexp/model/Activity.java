@@ -12,15 +12,10 @@ public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotBlank
     private String name;
-    @NotBlank
     private String description;
-    @NotBlank
     private int ageLimit;
-    @NotBlank
     private double price;
-    @NotBlank
-   private int participants; // Valideret i DTO.
+   private int maxParticipants;
+   private int minParticipants;
 }
