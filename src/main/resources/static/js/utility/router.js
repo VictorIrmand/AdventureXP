@@ -1,7 +1,10 @@
+import {updateNavHighlight} from "./highlight.js";
+
 const routes = {
     "/": () => import("../pages/login-page.js"),
     "/signup": () => import ("../pages/signup-page.js"),
-    "/home": () => import ("../pages/home-page.js")
+    "/home": () => import ("../pages/home-page.js"),
+    "/manage-activities": () => import ("../pages/admin/manage-activities-page.js")
 }
 
 // currentUnmount bliver returneret i mount og gør at en side fjerner sig selv.

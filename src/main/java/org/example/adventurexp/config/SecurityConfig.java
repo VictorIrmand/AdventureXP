@@ -41,7 +41,7 @@ public class SecurityConfig {
                         // Åbne auth endpoints
                         .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
                         // Rollebeskyttede endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**","/manage-activities", "/create-activity").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                         // Alt andet kræver login
                         .anyRequest().authenticated()

@@ -9,7 +9,7 @@ export function mount() {
 
             <div class="center-right">
 
-<h1>hej</h1>
+                <h1>hej</h1>
             </div>
 
         </div>

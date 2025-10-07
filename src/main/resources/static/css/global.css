@@ -9,8 +9,9 @@
 body {
     font-family: "Inter", "Roboto", sans-serif;
     background-color: #f9fafb;
-    color: #111;
+    color: #6c737f;
     line-height: 1.5;
+    overflow: hidden;
 
 }
 

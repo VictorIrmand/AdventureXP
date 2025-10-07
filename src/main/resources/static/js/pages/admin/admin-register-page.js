@@ -1,4 +1,4 @@
-import {adminSignUp} from "../service/auth-service.js";
+import {adminSignUp} from "../../service/auth-service.js";
 
 
 export function mount () {
