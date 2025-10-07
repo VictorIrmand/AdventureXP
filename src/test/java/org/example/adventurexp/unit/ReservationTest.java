@@ -159,7 +159,8 @@ public class ReservationTest {
         //Assert
         assertEquals(saved,expectedDTO);
 
-        Mockito.verify(reservationRepository, Mockito.times(1)).findAll();
+        Mockito.verify(reservationRepository, Mockito.times(1)).existsByStartDate(startDate);
+        Mockito.verify(reservationRepository, Mockito.times(1)).save(any(Reservation.class));
     }
 
     @Test
