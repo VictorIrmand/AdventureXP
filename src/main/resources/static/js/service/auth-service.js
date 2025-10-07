@@ -1,5 +1,6 @@
 import {showError} from "../utility/error-message.js";
 import {navigate} from "../utility/router.js";
+import {apiGetJson} from "../utility/api.js";
 
 export async function login(loginRequestDTO) {
 
@@ -19,7 +20,7 @@ export async function login(loginRequestDTO) {
 
     if (response.ok) {
         console.log("det virker");
-        navigate("/homepage");
+        navigate("/home");
     }
 }
 
@@ -42,6 +43,10 @@ export async function signUp(signUpRequestDTO) {
     if (response.ok) {
         console.log("Det virker")
     }
+}
+
+export async function getMe() {
+    return await apiGetJson("/api/auth/me");
 }
 
 

@@ -24,31 +24,43 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Sessions i stedet for JWT
                 .csrf(csrf -> csrf.disable())
                 .formLogin(form -> form.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .httpBasic(basic -> basic.disable())
+
+                // Sørg for at Spring gemmer authentication automatisk i sessionen
+                .securityContext(context -> context.requireExplicitSave(false))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                )
+
                 .authorizeHttpRequests(a -> a
-                        // offentlige sider
-                        .requestMatchers("/", "/signup", "/index.html", "/favicon.ico", "/css/**", "/js/**", "/images/**").permitAll()
-                        // auth endpoints
+                        // Offentlige filer og sider
+                        .requestMatchers("/", "/signup", "/index.html", "/favicon.ico",
+                                "/css/**", "/js/**", "/images/**").permitAll()
+                        // Åbne auth endpoints
                         .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
-                        // rolle-beskyttede endpoints
+                        // Rollebeskyttede endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                        // alt andet kræver login
+                        // Alt andet kræver login
                         .anyRequest().authenticated()
                 )
+
+                // Returnér 401 i stedet for redirect ved uautoriseret API-adgang
                 .exceptionHandling(eh -> eh
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendRedirect("/"); // altid redirect til login-siden
+                        .authenticationEntryPoint((req, res, ex) -> {
+                            res.setStatus(401);
+                            res.setContentType("application/json");
+                            res.getWriter().write("{\"error\":\"unauthorized\"}");
                         })
                 )
+
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessHandler((req, res, auth) -> res.setStatus(200))
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID") // rydder session-cookien
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
 
