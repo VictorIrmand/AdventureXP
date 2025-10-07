@@ -45,6 +45,27 @@ export async function signUp(signUpRequestDTO) {
         navigate("/");
     }
 }
+export async function makeReservation(reservationDTO) {
+    const response = await fetch("api/user/reservation", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(reservationDTO)
+    });
+
+    if(response.status === 400) {
+        const errorText = await response.text();
+        console.log(errorText)
+        showError(errorText);
+    }
+
+    if (response.ok) {
+        console.log("Det virker")
+    }
+
+}
 
 export async function getMe() {
     return await apiGetJson("/api/auth/me");

@@ -1,5 +1,7 @@
 package org.example.adventurexp.mapper;
 
+import org.example.adventurexp.dto.ReservationDTO;
+import org.example.adventurexp.model.Reservation;
 import org.example.adventurexp.dto.activity.ActivityDTO;
 import org.example.adventurexp.dto.activity.CreateActivityDTO;
 import org.example.adventurexp.dto.user.UserDTO;
@@ -54,4 +56,15 @@ public class DTOMapper {
                 activity.getMinParticipants()
         );
     }
+    public static ReservationDTO toDTO (Reservation reservation) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return new ReservationDTO(
+                reservation.getName(),
+                reservation.getStartDate().format(formatter),
+                reservation.getParticipants(),
+                reservation.isCompanyBooking(),
+                reservation.getReservationActivities()
+        );
+    }
+
 }
