@@ -1,7 +1,6 @@
 package org.example.adventurexp.mapper;
 
 import org.example.adventurexp.dto.ReservationDTO;
-import org.example.adventurexp.dto.activity.UpdateActivityDTO;
 import org.example.adventurexp.model.Reservation;
 import org.example.adventurexp.dto.activity.ActivityDTO;
 import org.example.adventurexp.dto.activity.CreateActivityDTO;
@@ -31,6 +30,7 @@ public class DTOMapper {
                 formattedDate
         );
     }
+
 
 
     // activity
@@ -72,7 +72,7 @@ public class DTOMapper {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         return new ReservationDTO(
                 reservation.getName(),
-                reservation.getStartDate().format(formatter),
+                reservation.getStartDate(),
                 reservation.getParticipants(),
                 reservation.isCompanyBooking(),
                 reservation.getReservationActivities()

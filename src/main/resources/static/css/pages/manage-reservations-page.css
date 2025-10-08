@@ -15,6 +15,8 @@
     align-items: center;
     background-color: #f9fafb;
     padding: 2rem;
+    overflow-y: auto;
+    height: 100vh;
 }
 
 .reservations-container {
@@ -41,4 +43,13 @@
 .reservation-card p {
     margin: 0.3rem 0;
     color: #374151;
+}
+
+#calendar {
+    width: 90%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-top: 1rem;
 }

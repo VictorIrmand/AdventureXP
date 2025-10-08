@@ -33,8 +33,7 @@ public class ReservationService {
 
     public ReservationDTO makeReservation(ReservationDTO reservationDTO, UserDTO userDTO){
         User user = userService.getUserById(userDTO.id());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        LocalDateTime startDate = LocalDateTime.parse(reservationDTO.startDate(), formatter);
+        LocalDateTime startDate = reservationDTO.startDate();
 
         if (reservationRepository.existsByStartDate(startDate)) {
             throw new IllegalStateException("The selected time slot is already booked.");
