@@ -1,7 +1,7 @@
 package org.example.adventurexp.unit;
 
 import org.example.adventurexp.dto.ReservationDTO;
-import org.example.adventurexp.dto.UserDTO;
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.model.Reservation;
 import org.example.adventurexp.model.Role;
 import org.example.adventurexp.model.User;
@@ -195,5 +195,39 @@ assertEquals("The selected time slot is already booked.",exception.getMessage())
 
 
     }
+
+    @Test
+    void getAllReservations_shouldReturnMappedDTOList() {
+        // Arrange
+        LocalDateTime startDate1 = LocalDateTime.of(2025, 10, 7, 14, 0);
+        LocalDateTime startDate2 = LocalDateTime.of(2025, 11, 2, 10, 30);
+
+        List<Reservation> mockReservations = List.of(
+                new Reservation("Teambuilding", 10, startDate1, true, new ArrayList<>()),
+                new Reservation("Familiedag", 5, startDate2, false, new ArrayList<>())
+        );
+
+        when(reservationRepository.findAll()).thenReturn(mockReservations);
+
+        // Act
+        List<ReservationDTO> result = reservationService.getAllReservations();
+
+        // Assert
+        assertEquals(2, result.size());
+        assertEquals("Teambuilding", result.get(0).name());
+        assertEquals("Familiedag", result.get(1).name());
+        Mockito.verify(reservationRepository, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    void getAllReservations_shouldReturnEmptyList_whenNoReservationsExist() {
+        when(reservationRepository.findAll()).thenReturn(new ArrayList<>());
+
+        List<ReservationDTO> result = reservationService.getAllReservations();
+
+        assertEquals(0, result.size());
+        Mockito.verify(reservationRepository, Mockito.times(1)).findAll();
+    }
+
 }
 
