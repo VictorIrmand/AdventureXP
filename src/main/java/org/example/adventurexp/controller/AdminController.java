@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.activity.ActivityDTO;
 import org.example.adventurexp.dto.activity.CreateActivityDTO;
+import org.example.adventurexp.dto.activity.UpdateActivityDTO;
 import org.example.adventurexp.dto.user.AdminRegisterSignUpDTO;
 import org.example.adventurexp.service.ActivityService;
 import org.example.adventurexp.service.ReservationService;
