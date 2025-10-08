@@ -3,7 +3,8 @@ package org.example.adventurexp.controller;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.example.adventurexp.dto.ReservationDTO;
-import org.example.adventurexp.dto.UserDTO;
+
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.model.User;
 import org.example.adventurexp.service.ReservationService;
 import org.example.adventurexp.service.UserService;

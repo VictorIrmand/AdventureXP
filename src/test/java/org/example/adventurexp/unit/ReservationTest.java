@@ -1,7 +1,8 @@
 package org.example.adventurexp.unit;
 
 import org.example.adventurexp.dto.ReservationDTO;
-import org.example.adventurexp.dto.UserDTO;
+
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.model.Reservation;
 import org.example.adventurexp.model.Role;
 import org.example.adventurexp.model.User;

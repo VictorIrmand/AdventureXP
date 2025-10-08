@@ -80,8 +80,8 @@
     padding: 0.7rem 1rem;
     cursor: pointer;
     transition: background-color 0.15s ease;
-    width: 50%;
-    height: 14rem;
+    width: 14rem;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;

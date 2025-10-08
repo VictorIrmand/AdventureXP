@@ -1,13 +1,13 @@
 package org.example.adventurexp.service;
 
 import org.example.adventurexp.dto.ReservationDTO;
-import org.example.adventurexp.dto.UserDTO;
+
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.exception.ReservationNotFoundException;
 import org.example.adventurexp.mapper.DTOMapper;
 import org.example.adventurexp.model.Reservation;
 import org.example.adventurexp.model.User;
 import org.example.adventurexp.repository.ReservationRepository;
-import org.hibernate.action.internal.EntityActionVetoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

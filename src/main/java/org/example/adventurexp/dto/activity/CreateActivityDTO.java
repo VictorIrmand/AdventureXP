@@ -18,6 +18,8 @@ public record CreateActivityDTO(
 
         int maxParticipants,
 
-        int minParticipants
+        int minParticipants,
+
+        String imgUrl
 ) {
 }

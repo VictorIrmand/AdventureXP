@@ -14,6 +14,8 @@ public record ActivityDTO(
 
         int maxParticipants,
 
-        int minParticipants
+        int minParticipants,
+
+        String imgUrl
 ) {
 }

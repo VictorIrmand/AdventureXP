@@ -41,12 +41,16 @@ export async function showGlobalNavbar(containerEl) {
     `
 
 
-    const currentUserDto = await getMe();
+    const currentUserDto = await getMe().catch(() => null);
+    if (!currentUserDto) {
+        navigate("/");
+        return;
+    }
 
     const logoutEl = document.querySelector(".log-out");
 
-    logoutEl.addEventListener("click", e => {
-        logout();
+    logoutEl.addEventListener("click", async e => {
+        await logout();
         navigate("/");
     })
 
