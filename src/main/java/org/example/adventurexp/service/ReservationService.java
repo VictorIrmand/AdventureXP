@@ -1,7 +1,7 @@
 package org.example.adventurexp.service;
 
 import org.example.adventurexp.dto.ReservationDTO;
-import org.example.adventurexp.dto.UserDTO;
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.exception.ReservationNotFoundException;
 import org.example.adventurexp.mapper.DTOMapper;
 import org.example.adventurexp.model.Reservation;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -78,5 +80,20 @@ public class ReservationService {
         } else {
             throw new ReservationNotFoundException("Reservation with id " + id + " was not found");
         }
+    }
+
+    public List<ReservationDTO> getAllReservations() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        List<ReservationDTO> dtoList = new ArrayList<>();
+
+        for(Reservation reservation : reservations){
+            ReservationDTO dto = DTOMapper.toDTO(reservation);
+            dtoList.add(dto);
+        }
+        return dtoList;
+
+
+
+
     }
 }

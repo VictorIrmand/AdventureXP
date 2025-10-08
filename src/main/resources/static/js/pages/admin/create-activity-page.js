@@ -7,7 +7,7 @@ export function mount() {
         <div class="create-activity-page">
 
             <div class="left"></div>
-
+    
             <div class="center-right">
 
                 <div class="create-form">
