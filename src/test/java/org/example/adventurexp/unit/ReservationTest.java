@@ -91,7 +91,7 @@ public class ReservationTest {
 
         mockReservationDTOList.add(new ReservationDTO(
                 "Teambuilding",
-                LocalDateTime.of(2025, 10, 7, 14, 0).format(formatter),
+                LocalDateTime.of(2025, 10, 7, 14, 0),
                 10,
                 true,
                 new ArrayList<>()
@@ -99,14 +99,14 @@ public class ReservationTest {
 
         mockReservationDTOList.add(new ReservationDTO(
                 "Familiedag",
-                LocalDateTime.of(2025, 11, 2, 10, 30).format(formatter),
+                LocalDateTime.of(2025, 11, 2, 10, 30),
                 5,
                 false,
                 new ArrayList<>()
         ));
 
         mockReservationDTOList.add(new ReservationDTO("Firmajulefrokost",
-                LocalDateTime.of(2025, 12, 14, 18, 0).format(formatter),
+                LocalDateTime.of(2025, 12, 14, 18, 0),
                 25,
                 true,
                 new ArrayList<>()
@@ -137,7 +137,7 @@ public class ReservationTest {
 
         // Arrange
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String formattedStartDate = LocalDateTime.of(2025, 12, 20, 18, 0).format(formatter);
+        LocalDateTime formattedStartDate = LocalDateTime.of(2025, 12, 20, 18, 0);
         LocalDateTime startDate = LocalDateTime.of(2025, 12, 20, 18, 0);
 
         ReservationDTO expectedDTO = new ReservationDTO(
@@ -170,7 +170,7 @@ public class ReservationTest {
         LocalDateTime startDate = LocalDateTime.of(2025, 10, 7, 14, 0);
 
         ReservationDTO reservationDTO1 = new ReservationDTO(
-                "Julefrokost", startDate.format(formatter),
+                "Julefrokost", startDate,
                 20, true,
                 new ArrayList<>()
         );
