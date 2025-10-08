@@ -9,17 +9,18 @@ import org.example.adventurexp.model.Activity;
 import org.example.adventurexp.model.User;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class DTOMapper {
 
     // user
-    public static UserDTO toDTO (User user) {
+    public static UserDTO toDTO(User user) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = user.getCreatedAt() != null
                 ? user.getCreatedAt().format(formatter)
                 : null;
 
-        return new UserDTO (
+        return new UserDTO(
                 user.getId(),
                 user.getUsername(),
                 user.getFirstName(),
@@ -33,18 +34,19 @@ public class DTOMapper {
 
 
     // activity
-    public static Activity toEntity (CreateActivityDTO createActivityDTO) {
+    public static Activity toEntity(CreateActivityDTO createActivityDTO) {
         return new Activity(
                 createActivityDTO.name(),
                 createActivityDTO.description(),
                 createActivityDTO.ageLimit(),
                 createActivityDTO.pricePerMinutePerPerson(),
                 createActivityDTO.maxParticipants(),
-                createActivityDTO.minParticipants()
+                createActivityDTO.minParticipants(),
+                createActivityDTO.imgUrl()
         );
     }
 
-    public static ActivityDTO toDTO (Activity activity) {
+    public static ActivityDTO toDTO(Activity activity) {
 
         return new ActivityDTO(
                 activity.getId(),
@@ -53,11 +55,21 @@ public class DTOMapper {
                 activity.getAgeLimit(),
                 activity.getPricePerMinutePerPerson(),
                 activity.getMaxParticipants(),
-                activity.getMinParticipants()
+                activity.getMinParticipants(),
+                activity.getImgUrl()
         );
     }
-    public static ReservationDTO toDTO (Reservation reservation) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+    public static List<ActivityDTO> toDTOList(List<Activity> activityList) {
+        return activityList.stream().map(
+                activity -> toDTO(activity)
+        ).toList();
+    }
+
+
+    // reservation
+    public static ReservationDTO toDTO(Reservation reservation) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         return new ReservationDTO(
                 reservation.getName(),
                 reservation.getStartDate(),

@@ -16,6 +16,7 @@ public class SpaController {
             "/manage-activities/**",
             "/manage-reservations/**",
             "/create-activity/**",
+            "/update-activity/**",
             "/reservations/**",
             "/company-events/**",
             "/dashboard/**",

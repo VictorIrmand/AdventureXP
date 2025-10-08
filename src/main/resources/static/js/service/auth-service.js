@@ -86,18 +86,14 @@ export async function logout() {
 export async function checkAuth() {
     try {
         const userDTO = await getMe();
-
-        if (userDTO) {
-            navigate("/home");
-        } else {
-            navigate("/");
-        }
-
+        return !!userDTO; // hvis man er logget ind returner den true ellers false.
     } catch (err) {
         console.error("Auth check failed:", err);
-        navigate("/");
+        return false;
     }
 }
+
+
 
 
 

@@ -21,17 +21,33 @@
 
 }
 
+.create-container {
+
+    display: flex;
+    height: 6rem;
+    width: 20rem;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.create-container p {
+    font-size: 15px;
+}
+
 .create-activity-btn {
-    background-color: #4eaa79;   /* grøn */
+    background-color: #4eaa79; /* grøn */
     color: white;
     font-weight: 500;
     font-size: 0.95rem;
     border: none;
     border-radius: 6px;
+    height: 3rem;
+    width: 10rem;
     padding: 0.6rem 1.4rem;
     cursor: pointer;
     transition: background-color 0.15s ease;
-    margin-top: 3rem;
+
 }
 
 .create-activity-btn:hover {
@@ -52,4 +68,67 @@
     flex-direction: column;
     min-height: 30rem;
     padding-top: 2rem;
+}
+
+.activity-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 0 auto;
+    border: 3px dashed #e5e7eb;
+
+    border-radius: 7px;
+    margin-top: 1rem;
+    overflow: scroll;
+    width: 95%;
+}
+
+.activity-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 250px; /* fast bredde for pænt grid */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+}
+
+.activity-image {
+    width: 10rem;
+    height: 8rem;
+    border-radius: 7px;
+}
+
+
+.activity-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.activity-buttons button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.update-btn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #ef4444;
+    color: white;
+}
+
+.activity-buttons button:hover {
+    opacity: 0.85;
 }

@@ -35,17 +35,19 @@ public class Activity {
     @Column(nullable = false)
     private int maxParticipants;
 
-    @Column
+    @Column(nullable = false)
     private int minParticipants;
 
+    private String imgUrl;
 
-    public Activity(String name, String description, int ageLimit, double pricePerMinutePerPerson, int maxParticipants, int minParticipants) {
+    public Activity(String name, String description, int ageLimit, double pricePerMinutePerPerson, int maxParticipants, int minParticipants, String imgUrl) {
         this.name = name;
         this.description = description;
         this.ageLimit = ageLimit;
         this.pricePerMinutePerPerson = pricePerMinutePerPerson;
         this.maxParticipants = maxParticipants;
         this.minParticipants = minParticipants;
+        this.imgUrl = imgUrl;
     }
 
 

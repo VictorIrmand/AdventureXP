@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.activity.ActivityDTO;
 import org.example.adventurexp.dto.activity.CreateActivityDTO;
+import org.example.adventurexp.dto.activity.UpdateActivityDTO;
 import org.example.adventurexp.dto.user.AdminRegisterSignUpDTO;
 import org.example.adventurexp.service.ActivityService;
 import org.example.adventurexp.service.ReservationService;
@@ -20,6 +21,7 @@ public class AdminController {
 
     private final UserService userService;
     private final ActivityService activityService;
+    private final ReservationService reservationService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerEmployee(@Valid @RequestBody AdminRegisterSignUpDTO adminRegisterSignUpDTO){
@@ -32,6 +34,23 @@ public class AdminController {
     public ResponseEntity<ActivityDTO> createActivity (@Valid @RequestBody CreateActivityDTO dto) {
        ActivityDTO saved = activityService.createActivity(dto);
        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @DeleteMapping("/delete-activity")
+    public ResponseEntity<?> deleteActivity(@RequestParam long id) {
+
+        activityService.deleteActivity(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update-activity")
+    public ResponseEntity<ActivityDTO> updateActivity (@Valid @RequestBody UpdateActivityDTO dto) {
+
+
+        ActivityDTO updated = activityService.updateActivity(dto);
+
+        return ResponseEntity.ok().body(updated);
     }
 
 }
