@@ -57,10 +57,10 @@ public class DTOMapper {
         );
     }
     public static ReservationDTO toDTO (Reservation reservation) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         return new ReservationDTO(
                 reservation.getName(),
-                reservation.getStartDate().format(formatter),
+                reservation.getStartDate(),
                 reservation.getParticipants(),
                 reservation.isCompanyBooking(),
                 reservation.getReservationActivities()

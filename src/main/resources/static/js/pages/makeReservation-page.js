@@ -61,7 +61,9 @@ export function mount () {
     registerBtn.addEventListener("click", async e => {
         e.preventDefault();
         const name = document.querySelector("#name").value;
-        const startDate = document.querySelector("#date").value + document.querySelector("#time").value;
+        const dateInput = document.querySelector("#date").value;
+        const timeInput = document.querySelector("#time").value;
+        const startDate = `${dateInput}T${timeInput}`;
         const participants = document.querySelector("#participants").value;
         const isCompany = document.querySelector("#isCompany").value;
         const activities = document.querySelector("#activities").value;

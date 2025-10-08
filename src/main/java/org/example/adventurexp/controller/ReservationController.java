@@ -38,6 +38,11 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @GetMapping("/reservations")
+    public ResponseEntity<?> getAllReservations() {
+        return ResponseEntity.ok(reservationService.getAllReservations());
+    }
+
 
 
 }

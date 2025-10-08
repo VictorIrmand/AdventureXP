@@ -20,7 +20,6 @@ public class AdminController {
 
     private final UserService userService;
     private final ActivityService activityService;
-    private final ReservationService reservationService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerEmployee(@Valid @RequestBody AdminRegisterSignUpDTO adminRegisterSignUpDTO){
@@ -33,11 +32,6 @@ public class AdminController {
     public ResponseEntity<ActivityDTO> createActivity (@Valid @RequestBody CreateActivityDTO dto) {
        ActivityDTO saved = activityService.createActivity(dto);
        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-    }
-
-    @GetMapping("/reservations")
-    public ResponseEntity<?> getAllReservations() {
-        return ResponseEntity.ok(reservationService.getAllReservations());
     }
 
 }
