@@ -1,0 +1,44 @@
+.manage-reservations-page {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.manage-reservations-page .left {
+    flex: 2;
+}
+
+.manage-reservations-page .center-right {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9fafb;
+    padding: 2rem;
+}
+
+.reservations-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2rem;
+}
+
+.reservation-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.reservation-card h3 {
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.reservation-card p {
+    margin: 0.3rem 0;
+    color: #374151;
+}

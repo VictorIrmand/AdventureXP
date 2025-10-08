@@ -3,7 +3,7 @@ package org.example.adventurexp.controller;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.example.adventurexp.dto.ReservationDTO;
-
+import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.dto.user.UserDTO;
 import org.example.adventurexp.model.User;
 import org.example.adventurexp.service.ReservationService;
@@ -13,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/user")
@@ -30,7 +27,7 @@ public class ReservationController {
 
     @PostMapping("/reservation")
     public ResponseEntity<?> addReservation(@Valid @RequestBody ReservationDTO reservationDTO, Authentication authentication){
-        UserDTO user = userService.getUserByUsername(authentication.getName());
+        org.example.adventurexp.dto.user.UserDTO user = userService.getUserByUsername(authentication.getName());
         reservationService.makeReservation(reservationDTO, user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -40,5 +37,7 @@ public class ReservationController {
         reservationService.deleteReservation(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+
 
 }

@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.activity.ActivityDTO;
 import org.example.adventurexp.dto.activity.CreateActivityDTO;
-import org.example.adventurexp.dto.activity.UpdateActivityDTO;
 import org.example.adventurexp.dto.user.AdminRegisterSignUpDTO;
 import org.example.adventurexp.service.ActivityService;
 import org.example.adventurexp.service.UserService;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("api/admin")
 public class AdminController {
 
     private final UserService userService;
