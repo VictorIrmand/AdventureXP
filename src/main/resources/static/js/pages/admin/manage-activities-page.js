@@ -124,5 +124,4 @@ async function loadActivitiesInDom () {
 
         activityListContainer.append(activityCard);
     });
-
 }

@@ -6,7 +6,7 @@ const routes = {
     "/home": () => import ("../pages/home-page.js"),
     "/manage-activities": () => import ("../pages/admin/manage-activities-page.js"),
     "/create-activity": () => import("../pages/admin/create-activity-page.js"),
-    "/update-activity": () => import ("../pages/admin/update-activity-page.js")
+    "/update-activity": () => import ("../pages/admin/update-activity-page.js"),
     "/manage-reservations": () => import("../pages/admin/manage-reservations-page.js")
 }
 
@@ -35,7 +35,7 @@ export async function route(path = location.pathname, state = null) {
     if (typeof module.mount === "function") {
 
         console.log("Kalder mount() for: ", path);
-        currentUnmount = module.mount(); // tager returværdien af modulets mount som er en unmount.
+        currentUnmount = await module.mount(); // tager returværdien af modulets mount som er en unmount.
     } else { // findes der ikke en mount funktion så skal unmount blive null igen.
         currentUnmount = null;
         console.error("No mount() in module:", path);
