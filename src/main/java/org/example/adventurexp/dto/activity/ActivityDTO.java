@@ -2,7 +2,7 @@ package org.example.adventurexp.dto.activity;
 
 public record ActivityDTO(
 
-        Long id,
+        long id,
 
         String name,
 
