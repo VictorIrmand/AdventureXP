@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.example.adventurexp.model.Role;
 
-public record AdminRegisterSignUpDTO(
+public record AdminRegisterUserDTO(
         @NotBlank(message = "Username must not be blank")
         @Size(min = 3, max = 50, message = "Username length must be between 3 and 50 characters")
         String username,
