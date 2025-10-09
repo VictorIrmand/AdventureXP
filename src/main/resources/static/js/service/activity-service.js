@@ -70,7 +70,7 @@ export async function updateActivity(updateActivityDTO) {
 
     if (response.ok) {
         const activityDTO = await response.json();
-        navigate("/manage-activities");
+        await navigate("/manage-activities");
         showMessage("Activity with name: " + activityDTO.name + " was successfully updated.", "info");
     }
 }

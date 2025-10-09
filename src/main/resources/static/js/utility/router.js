@@ -42,7 +42,7 @@ export async function route(path = location.pathname, state = null) {
 }
 
 // manipulerer url og kører mount. bruges når man skal navigere i appen.
-export function navigate(path, state = null) {
+export async function navigate(path, state = null) {
     console.log("navigate KALDT med:", path);
     if (location.pathname === path) {
         console.log("Er allerede på: ", path, " -> vi skipper navigate");
@@ -50,14 +50,14 @@ export function navigate(path, state = null) {
     } else {
         console.log("Vi skifter url til: ", path);
         history.pushState(state, "", path);// ændrer url.
-        route(path, state); // kalder route og indlæser det rigtige modul.
+        await route(path, state); // kalder route og indlæser det rigtige modul.
     }
 }
 
 // når man trykker frem og tilbage, så vil man få den sidste side i historikken.
-window.addEventListener("popstate", (e) => {
+window.addEventListener("popstate", async (e) => {
     e.preventDefault();
-    route(location.pathname, e.state);
+    await route(location.pathname, e.state);
 })
 
 
