@@ -68,9 +68,14 @@ export function mount() {
         const isCompany = document.querySelector("#isCompany").checked;
         const activities = document.querySelector("#activities").value;
 
-        if (!startDate) {
-            showMessage("Reservation must have valid time.", "error")
-            return
+        if (!dateInput) {
+            showMessage("Date must be valid", "error");
+            return;
+        }
+
+        if (!timeInput) {
+            showMessage("Time must be valid", "error");
+            return;
         }
 
         const reservationDTO = {

@@ -99,7 +99,7 @@ export async function makeReservation(reservationDTO) {
     }
 
     if (response.ok) {
-        console.log("Det virker")
+        return response;
     }
 
 }

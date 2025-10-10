@@ -17,11 +17,11 @@ public record ReservationDTO(
         @Size(max = 100)
         String name,
 
-        @NotNull(message = "Date and Time cannot be null")
+        @NotNull(message = "Date and Time cannot be null.")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
         LocalDateTime startDate,
 
-        @Min(1)
+        @Size(min = 1, message = "Participants must be over 1.")
         @NotNull
         int participants,
 

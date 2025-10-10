@@ -1,18 +1,14 @@
-import {apiFetch, apiGetJson, apiPostJson, apiPutJson} from "../utility/api.js";
-import {showMessage} from "../utility/message.js";
+import {apiPostJson} from "../utility/api.js";
 import {navigate} from "../utility/router.js";
 
 export async function makeReservation(reservationDTO) {
-    const response = await apiPostJson("api/user/reservation", reservationDTO);
+    const response = await apiPostJson("/api/user/reservation", reservationDTO);
 
     if (!response) return;
 
     if (response.ok) {
-        console.log("Det virker")
         navigate("/home")
     }
-
-
 }
 
 export async function showCreateReservation(containerEL, currentUserDTO) {
@@ -29,7 +25,7 @@ export async function showCreateReservation(containerEL, currentUserDTO) {
         const createReservationBtn = document.querySelector(".create-reservation-btn");
 
         createReservationBtn.addEventListener("click", () => {
-                navigate("/make-reservations")
+                navigate("/make-reservation")
 
             }
         )

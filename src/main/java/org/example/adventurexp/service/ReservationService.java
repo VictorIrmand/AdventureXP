@@ -1,37 +1,34 @@
 package org.example.adventurexp.service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.ReservationDTO;
 import org.example.adventurexp.dto.user.UserDTO;
-import org.example.adventurexp.exception.ReservationNotFoundException;
+import org.example.adventurexp.exception.DatabaseAccessException;
+import org.example.adventurexp.exception.DuplicateResourceException;
+import org.example.adventurexp.exception.NotFoundException;
 import org.example.adventurexp.mapper.DTOMapper;
 import org.example.adventurexp.model.Reservation;
 import org.example.adventurexp.model.User;
 import org.example.adventurexp.repository.ReservationRepository;
-import org.hibernate.action.internal.EntityActionVetoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final UserService userService;
+    private final ReservationRepository reservationRepository;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ReservationRepository reservationRepository;
-
-    public ReservationDTO makeReservation(ReservationDTO reservationDTO, UserDTO userDTO){
+    public ReservationDTO makeReservation(ReservationDTO reservationDTO, UserDTO userDTO) {
         User user = userService.getUserById(userDTO.id());
         LocalDateTime startDate = reservationDTO.startDate();
 
@@ -51,12 +48,19 @@ public class ReservationService {
             return DTOMapper.toDTO(reservationRepository.save(reservation));
 
         } catch (DataIntegrityViolationException e) {
-            logger.error("Reservation with name; {} contains database constrains violations",reservationDTO.name());
-            throw new IllegalStateException("Database constrain violation; " + e.getMessage());
-        }
-        catch (DataAccessException e) {
+
+            String msg = e.getMostSpecificCause().getMessage().toLowerCase();
+            if (msg.contains("duplicate") || msg.contains("unique") || msg.contains("constraint")) {
+                if (msg.contains("uc_reservation_name")) {
+                    logger.warn("Reservation with name '{}' already exists.", reservationDTO.name());
+                    throw new DuplicateResourceException("Reservation name already exists");
+                }
+            }
+            logger.error("Reservation with name; {} contains database constrains violations", reservationDTO.name());
+            throw new DuplicateResourceException("The provided information conflicts with an existing reservation.");
+        } catch (DataAccessException e) {
             logger.error("Data access error while saving reservation; {}", reservationDTO.name());
-            throw new IllegalStateException("Database error; " + e.getMessage());
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 
@@ -64,35 +68,42 @@ public class ReservationService {
         try {
             return reservationRepository.findById(id)
                     .orElseThrow(() -> {
-                        return new ReservationNotFoundException("Fail to find Reservation!");
+                        return new NotFoundException("Reservation not found.");
                     });
         } catch (DataAccessException e) {
-            logger.error("Database problem: {}", e.getMessage());
-            throw new IllegalStateException("Database problem: " + e.getMessage());
+            logger.error("Database problem while retrieving reservation by id: {}", id, e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 
-    public void deleteReservation(int id){
-        Optional<Reservation> reservation = reservationRepository.findById(id);
-        if (reservation.isPresent()){
-        reservationRepository.delete(reservation.get());
-        } else {
-            throw new ReservationNotFoundException("Reservation with id " + id + " was not found");
+    public void deleteReservation(int id) {
+        try {
+            Optional<Reservation> reservation = reservationRepository.findById(id);
+            if (reservation.isPresent()) {
+                reservationRepository.delete(reservation.get());
+            } else {
+                throw new NotFoundException("Reservation not found.");
+            }
+        } catch (DataAccessException e) {
+            logger.error("Data access error while deleting reservation with ID: {}", id, e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 
     public List<ReservationDTO> getAllReservations() {
-        List<Reservation> reservations = reservationRepository.findAll();
-        List<ReservationDTO> dtoList = new ArrayList<>();
+        try {
+            List<Reservation> reservations = reservationRepository.findAll();
+            List<ReservationDTO> dtoList = new ArrayList<>();
 
-        for(Reservation reservation : reservations){
-            ReservationDTO dto = DTOMapper.toDTO(reservation);
-            dtoList.add(dto);
+            for (Reservation reservation : reservations) {
+                ReservationDTO dto = DTOMapper.toDTO(reservation);
+                dtoList.add(dto);
+            }
+            return dtoList;
+        } catch (DataAccessException e) {
+            logger.error("Failed to retrieve reservations from database.", e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
-        return dtoList;
-
-
-
 
     }
 }

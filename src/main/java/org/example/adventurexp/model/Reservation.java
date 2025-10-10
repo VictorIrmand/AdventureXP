@@ -15,7 +15,11 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "reservations")
+@Table(
+        name = "reservations",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uc_reservation_name", columnNames = "name")
+        })
 public class Reservation {
 
     @Id
