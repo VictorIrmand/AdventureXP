@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/user")
 public class ReservationController {
@@ -41,6 +43,13 @@ public class ReservationController {
     @GetMapping("/reservations")
     public ResponseEntity<?> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservations());
+    }
+
+    @GetMapping("/view-reservations")
+    public ResponseEntity<List<ReservationDTO>> getUserReservations (Authentication authentication) {
+        UserDTO user = userService.getUserByUsername(authentication.getName());
+        List<ReservationDTO> reservations = reservationService.getReservationsByUserId(user.id());
+        return ResponseEntity.ok(reservations);
     }
 
 
