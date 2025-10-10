@@ -1,6 +1,7 @@
 package org.example.adventurexp.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,15 +14,19 @@ import java.util.List;
 
 public record ReservationDTO(
         @NotBlank
-                @Size(max = 100)
-         String name,
-         @NotBlank
-         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-         LocalDateTime startDate,
-         @Min(1)
-         int participants,
-         boolean isCompanyBooking,
-         @NotNull
-         List<ReservationActivity> reservationActivities
+        @Size(max = 100)
+        String name,
+
+        @NotNull(message = "Date and Time cannot be null")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+        LocalDateTime startDate,
+
+        @Min(1)
+        @NotNull
+        int participants,
+
+        boolean isCompanyBooking,
+        @NotNull
+        List<ReservationActivity> reservationActivities
 ) {
 }
