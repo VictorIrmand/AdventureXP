@@ -26,12 +26,13 @@ public class ActivityTest {
 
     private List<ActivityDTO> mockActivityDTOList;
 
+    @Mock
+    private ActivityRepository activityRepository;
+
 
     @InjectMocks
     private ActivityService activityService;
 
-    @Mock
-    private ActivityRepository activityRepository;
 
 
     @BeforeEach
@@ -97,30 +98,24 @@ public class ActivityTest {
 
     @Test
     void deleteActivity_deletesActivity_whenActivityExists() {
-
-        // arrange
-        List<Activity> activityList = mockActivities;
-
+        List<Activity> activityList = new ArrayList<>(mockActivities);
         Activity paintball = activityList.getFirst();
 
-
-        // mock
+        // Mock BEFORE act
+        Mockito.when(activityRepository.existsById(1L)).thenReturn(true);
         Mockito.doAnswer(invocation -> {
             activityList.remove(paintball);
             return null;
         }).when(activityRepository).deleteById(1L);
 
+        // Act
+        activityService.deleteActivity(1L);
 
-        // act
-        activityService.deleteActivity(1);
-
-        // assert
-        assertNotEquals(activityList.getFirst().getId(), paintball.getId());
-
-        // verify
-
-        Mockito.verify(activityRepository, Mockito.times(1)).deleteById(any());
+        // Assert
+        assertFalse(activityList.contains(paintball));
+        Mockito.verify(activityRepository, Mockito.times(1)).deleteById(1L);
     }
+
 
 
     @Test
@@ -134,6 +129,7 @@ public class ActivityTest {
         // mock
         Mockito.when(activityRepository.findAll()).thenReturn(activityList);
 
+
         // act
         List<ActivityDTO> foundActivityDTOList = activityService.getAllActivities();
 
@@ -144,6 +140,8 @@ public class ActivityTest {
         }
 
         //
+
+
         Mockito.verify(activityRepository, Mockito.times(1)).findAll();
 
         assertNotSame(mockActivityDTOList, foundActivityDTOList);
