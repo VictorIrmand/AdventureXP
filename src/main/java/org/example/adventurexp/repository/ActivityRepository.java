@@ -11,4 +11,5 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
     List<Activity> id(long id);
 
 
+    boolean existsByid(long id);
 }
