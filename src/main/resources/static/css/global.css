@@ -12,6 +12,10 @@ body {
     color: #6c737f;
     line-height: 1.5;
     overflow: hidden;
+    background-image: url("../images/background.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
 }
 

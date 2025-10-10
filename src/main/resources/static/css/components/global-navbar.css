@@ -18,6 +18,8 @@
     border-right: 1px solid #e5e7eb;
     justify-content: space-between; /* <-- sørger for top og bund */
     height: 100vh; /* fyld hele siden i højden */
+
+    background: rgb(255, 255, 255);
 }
 
 .main-nav {
