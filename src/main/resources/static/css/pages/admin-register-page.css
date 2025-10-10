@@ -26,6 +26,7 @@
 
 /* Formular container */
 .admin-register-form {
+    position: relative;
     background-color: #ffffff;
     padding: 2.5rem 3rem;
     border-radius: 12px;
@@ -94,4 +95,31 @@
     color: #ef4444;
     font-weight: 500;
     text-align: center;
+}
+
+.center-right #back-btn {
+    background-color: #6b7280;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    align-self: flex-start;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    line-height: 1;
+
+    position: relative;
+    top: 4rem;
+    left: 17rem;
+}
+
+.center-right #back-btn:hover {
+    background-color: #4b5563;
 }

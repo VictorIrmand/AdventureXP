@@ -90,3 +90,25 @@
 .center-right  #create-btn:hover {
     background-color: #16a34a;
 }
+
+.center-right .create-form {
+    position: relative;
+}
+
+.center-right #back-btn {
+    background-color: #6b7280;
+    color: white;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+}
+
+.center-right #back-btn:hover {
+    background-color: #4b5563;
+}

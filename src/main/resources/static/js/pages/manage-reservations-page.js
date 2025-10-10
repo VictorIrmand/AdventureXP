@@ -1,6 +1,7 @@
 /* global FullCalendar */
 import { showGlobalNavbar } from "../components/global-navbar.js";
-import { apiGetJson } from "../utility/api.js"; // du bruger allerede denne helper
+import { apiGetJson } from "../utility/api.js";
+import {addBackButton} from "../utility/router.js"; // du bruger allerede denne helper
 
 export async function mount() {
     console.log("📅 Entered Manage Reservations (Calendar + List)");
@@ -19,7 +20,8 @@ export async function mount() {
         </div>
     `;
 
-    showGlobalNavbar(document.querySelector(".left"));
+    await addBackButton(".center-right")
+    await showGlobalNavbar(document.querySelector(".left"));
 
     // ✅ Load FullCalendar (kun første gang)
     if (!window.FullCalendar) {

@@ -62,6 +62,30 @@ export async function navigate(path, state = null) {
     }
 }
 
+export async function addBackButton(containerSelector) {
+    const container = document.querySelector(containerSelector)
+    if (!container) {
+        return;
+    }
+
+    const backContainer = document.createElement("div")
+    backContainer.classList.add("back-btn-container");
+
+    const button = document.createElement("button")
+    button.id = "back-btn"
+    button.textContent = "← Back"
+
+    button.addEventListener("click", async () => {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            await navigate("/home")
+        }
+    });
+    backContainer.appendChild(button)
+    container.prepend(backContainer)
+}
+
 // når man trykker frem og tilbage, så vil man få den sidste side i historikken.
 window.addEventListener("popstate", async (e) => {
     e.preventDefault();
