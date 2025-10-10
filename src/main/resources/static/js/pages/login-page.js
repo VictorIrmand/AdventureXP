@@ -8,6 +8,11 @@ export function mount() {
 
             <div class="login-form">
 
+                <div class="logo">
+                    <img src="/images/logo.png" alt="logo-pic" class="logo-pic"/>
+
+                </div>
+                
                 <div class="form-group">
                     <label for="username">Username or e-mail</label>
                     <input type="text" id="username" placeholder="Enter username or e-mail" required>

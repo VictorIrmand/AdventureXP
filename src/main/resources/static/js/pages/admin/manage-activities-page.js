@@ -11,6 +11,10 @@ export async function mount() {
             <div class="left"></div>
 
             <div class="center-right">
+
+                <div class="header">
+                    <h1>Manage Activities</h1>
+                </div>
                 <div class="edit-activities">
 
 

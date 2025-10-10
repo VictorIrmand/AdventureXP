@@ -10,8 +10,12 @@ export function mount() {
     
             <div class="center-right">
 
-                <div class="create-form">
+                
 
+                <div class="create-form">
+                    <div class="header">
+                        <h1 style="color: black">Create activity</h1>
+                    </div>
                     <div class="form-group">
                         <label for="name">Activity name:</label>
                         <input id="name" type="text" required>

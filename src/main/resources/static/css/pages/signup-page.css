@@ -1,0 +1,82 @@
+.register-page .logo img {
+    width: 7rem;
+    height: 7rem;
+}
+.register-page .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-page {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-page .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: white;
+    border-radius: 7px;
+    width: 30rem;
+    height: fit-content;
+    padding: 3rem;
+}
+
+.register-page .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-page .form-group input {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    height: 1.5rem;
+    border: 1px solid #4b5563;
+    border-radius: 7px;
+
+}
+
+.register-page #back-btn {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.register-page #back-btn:hover {
+    background-color: #d1d5db;
+}
+
+.register-page #register-btn {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #2563eb; /* klar blå */
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.register-page #register-btn:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.register-page #register-btn:active {
+    background-color: #1e40af;
+    transform: translateY(0);
+}
