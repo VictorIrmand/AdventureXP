@@ -8,7 +8,8 @@ const routes = {
     "/manage-reservations": () => import("../pages/manage-reservations-page.js"),
     "/manage-users": () => import ("../pages/admin/manage-users-page.js"),
     "/register-employee": () => import ("../pages/admin/register-employee-page.js"),
-    "/update-user": () => import("../pages/admin/update-user-page.js")
+    "/update-user": () => import("../pages/admin/update-user-page.js"),
+    "/make-reservation": () => import ("../pages/make-reservation-page.js")
 }
 
 // currentUnmount bliver returneret i mount og gør at en side fjerner sig selv.

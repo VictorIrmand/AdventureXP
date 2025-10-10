@@ -19,10 +19,10 @@ export async function mount() {
 
     `
 
-    showGlobalNavbar(document.querySelector(".left"));
+    await showGlobalNavbar(document.querySelector(".left"));
 
     const currentUserDTO = await getMe();
-    showCreateReservation(document.querySelector(".center-right"), currentUserDTO)
+    await showCreateReservation(document.querySelector(".center-right"), currentUserDTO)
 
     return () => {
         document.querySelector("#app-main").innerHTML = "";

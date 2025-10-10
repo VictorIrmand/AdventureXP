@@ -72,7 +72,7 @@ export async function mount() {
         }));
 
         const calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: "da",
+            locale: "EN",
             timeZone: "Europe/Copenhagen",
             initialView: "dayGridMonth",
             height: "auto",
@@ -87,7 +87,7 @@ export async function mount() {
                 alert(
                     `Reservation: ${info.event.title}\n` +
                     `Participants: ${props.participants}\n` +
-                    `Company booking: ${props.isCompanyBooking ? "Ja" : "Nej"}`
+                    `Company booking: ${props.isCompanyBooking ? "Yes" : "No"}`
                 );
             }
         });

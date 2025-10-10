@@ -24,6 +24,7 @@ public class SpaController {
             "/company-events/**",
             "/dashboard/**",
             "/equipment/**",
+            "/make-reservation/**",
             "/users/**"
     })
     public String forward(HttpServletRequest request) {
