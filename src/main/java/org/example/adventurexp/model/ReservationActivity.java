@@ -18,5 +18,4 @@ public class ReservationActivity {
     private Activity activity;
 
 
-
 }

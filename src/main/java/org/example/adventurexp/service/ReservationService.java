@@ -106,4 +106,25 @@ public class ReservationService {
         }
 
     }
+
+    public List<ReservationDTO> getReservationsByUserId(long userId) {
+        try {
+            List<Reservation> reservations = reservationRepository.findAll();
+            List<ReservationDTO> dtoList = new ArrayList<>();
+
+            for (Reservation reservation : reservations) {
+                if (reservation.getUser() != null && reservation.getUser().getId() == userId) {
+                    dtoList.add(DTOMapper.toDTO(reservation));
+                }
+            }
+            return dtoList;
+            } catch (DataAccessException e) {
+            logger.error("Failed to retrieve reservations from database.", e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
+        }
+
+
+
+    }
+
 }
