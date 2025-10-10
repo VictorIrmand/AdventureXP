@@ -17,4 +17,34 @@
     flex: 6;
 }
 
+.create-activity-btn {
+    background-color: #4eaa79; /* grøn */
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    height: 3rem;
+    width: 10rem;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+}
+
+.create-reservation-btn {
+    background-color: #4eaa79; /* grøn */
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    height: 3rem;
+    width: 10rem;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+}
+
 

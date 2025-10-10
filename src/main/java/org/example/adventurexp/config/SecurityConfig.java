@@ -51,7 +51,7 @@ public class SecurityConfig {
 
                         // 🟡 API endpoints (beskyttede)
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN","CUSTOMER")
 
                         // 🔒 ALT ANDET KRÆVER LOGIN
                         .anyRequest().authenticated()
