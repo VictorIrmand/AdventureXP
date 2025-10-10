@@ -45,6 +45,10 @@ public class SecurityConfig {
                         // 🟢 Auth endpoints (login/signup/logout)
                         .requestMatchers("/api/auth/**").permitAll()
 
+                        // Admin mounts
+                        .requestMatchers("/manage-activities", "/create-activity", "/update-activity", "/manage-users", "register-employee", "/update-user").hasRole("ADMIN")
+
+
                         // 🟡 API endpoints (beskyttede)
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")

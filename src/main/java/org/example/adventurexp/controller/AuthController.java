@@ -53,16 +53,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
-        userService.signUp(signUpRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
+        UserDTO saved = userService.signUp(signUpRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved.username());
     }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> handleAccessDenied(AccessDeniedException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-    }
-
-
 
 }

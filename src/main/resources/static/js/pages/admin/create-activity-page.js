@@ -54,7 +54,7 @@ export function mount() {
         </div>
     `
 
-    console.log("create kører!")
+
     showGlobalNavbar(document.querySelector(".left"));
 
     const createBtn = document.querySelector("#create-btn");

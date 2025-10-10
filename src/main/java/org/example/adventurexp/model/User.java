@@ -11,7 +11,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "passwordHash")
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uc_user_username", columnNames = "username"),
+                @UniqueConstraint(name = "uc_user_email", columnNames = "email")
+        }
+)
 public class User {
 
     @Id

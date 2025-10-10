@@ -3,38 +3,36 @@ import {navigate} from "../../utility/router.js";
 import {deleteActivity, loadAllActivities} from "../../service/activity-service.js";
 
 export async function mount() {
-    /* language=HTML */
+        /* language=HTML */
     document.querySelector("#app-main").innerHTML = `
 
-        <div class="manage-activities-page">
+        <div class="manage-container">
 
             <div class="left"></div>
 
             <div class="center-right">
                 <div class="edit-activities">
-                    
-                    
-                <div class="create-container">
-                    <button class="create-activity-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Create Activity
-                    </button>
 
-                    <div class="message-container"></div>
-                </div>
 
-           
+                    <div class="create-container">
+                        <button class="create-activity-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            Create Activity
+                        </button>
 
-         
-                <p>Edit activities</p>
+                        <div class="message-container"></div>
+                    </div>
 
-                <div class="activity-list-container">
+
+                    <p>Edit activities</p>
+
+                    <div class="activity-list-container">
+
+                    </div>
 
                 </div>
 
             </div>
-
-        </div>
 
 
         </div>

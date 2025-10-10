@@ -8,11 +8,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "activities")
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(
+        name = "activities",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uc_activity_name", columnNames = "name")
+        }
+)
 public class Activity {
 
     @Id
@@ -49,8 +55,6 @@ public class Activity {
         this.minParticipants = minParticipants;
         this.imgUrl = imgUrl;
     }
-
-
 
 
 }

@@ -1,5 +1,5 @@
 import {showGlobalNavbar} from "../../components/global-navbar.js";
-import {getActivityDTOByFromPathId, updateActivity} from "../../service/activity-service.js";
+import {getActivityDTOFromPathId, updateActivity} from "../../service/activity-service.js";
 
 export async function mount() {
     document.querySelector("#app-main").innerHTML = `
@@ -49,11 +49,11 @@ export async function mount() {
         </div>
     `;
 
-    console.log("create kører!");
+
     await showGlobalNavbar(document.querySelector(".left"));
 
 
-    const activityDTO = await getActivityDTOByFromPathId();
+    const activityDTO = await getActivityDTOFromPathId();
     await fillInput(activityDTO);
 
 
