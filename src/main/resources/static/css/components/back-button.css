@@ -1,0 +1,23 @@
+.back-button {
+    background-color: #6b7280; /* Grå nuance, så den ikke forveksles med "Create" */
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    width: 7rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-button:hover {
+    background-color: #4b5563; /* Mørkere grå ved hover */
+}
+.back-btn-container {
+    margin-bottom: 1rem;
+}

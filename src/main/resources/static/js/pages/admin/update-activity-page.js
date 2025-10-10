@@ -1,5 +1,6 @@
 import {showGlobalNavbar} from "../../components/global-navbar.js";
 import {getActivityDTOFromPathId, updateActivity} from "../../service/activity-service.js";
+import {addBackButton} from "../../utility/router.js";
 
 export async function mount() {
     document.querySelector("#app-main").innerHTML = `
@@ -49,7 +50,7 @@ export async function mount() {
         </div>
     `;
 
-
+    await addBackButton(".create-form")
     await showGlobalNavbar(document.querySelector(".left"));
 
 

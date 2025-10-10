@@ -1,4 +1,5 @@
 import {adminSignUp} from "../../service/auth-service.js";
+import {addBackButton} from "../../utility/router.js";
 
 
 export function mount () {
@@ -8,8 +9,8 @@ export function mount () {
     document.querySelector("#app-main").innerHTML = `
 
         <div class="register-page">
-
             <div class="register-form">
+                
 
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -56,6 +57,7 @@ export function mount () {
         </div>
     `
 
+    addBackButton(".register-form")
     const registerBtn = document.querySelector("#register-btn");
 
     registerBtn.addEventListener("click", async e => {

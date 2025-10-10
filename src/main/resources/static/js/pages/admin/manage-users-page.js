@@ -1,6 +1,6 @@
 import {deleteUser, loadAllUsers} from "../../service/user-service.js";
 import {showGlobalNavbar} from "../../components/global-navbar.js";
-import {navigate} from "../../utility/router.js";
+import {addBackButton, navigate} from "../../utility/router.js";
 
 let allUsers = [];
 
@@ -56,6 +56,7 @@ export async function mount() {
 
     allUsers = [];
 
+    await addBackButton(".center-right")
     await showGlobalNavbar(document.querySelector(".left"));
     await loadUsersInDom();
 

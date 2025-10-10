@@ -1,6 +1,7 @@
 import {adminRegister} from "../../service/auth-service.js";
 import {showGlobalNavbar} from "../../components/global-navbar.js";
 import {showMessage} from "../../utility/message.js";
+import {addBackButton} from "../../utility/router.js";
 
 export async function mount() {
     /* language=HTML */
@@ -57,6 +58,7 @@ export async function mount() {
         </div>
     `;
 
+    await addBackButton(".center-right")
     await showGlobalNavbar(document.querySelector(".left"));
 
     const registerBtn = document.querySelector("#register-btn");

@@ -1,5 +1,5 @@
 import {showGlobalNavbar} from "../../components/global-navbar.js";
-import {navigate} from "../../utility/router.js";
+import {addBackButton, navigate} from "../../utility/router.js";
 import {deleteActivity, loadAllActivities} from "../../service/activity-service.js";
 
 export async function mount() {
@@ -41,7 +41,7 @@ export async function mount() {
 
         </div>
     `
-
+    await addBackButton(".center-right")
     await showGlobalNavbar(document.querySelector(".left"));
 
 
