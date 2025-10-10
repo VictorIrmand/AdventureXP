@@ -1,6 +1,6 @@
 import {showMessage} from "../utility/message.js";
 import {navigate} from "../utility/router.js";
-import {apiFetch, apiGetJson} from "../utility/api.js";
+import {apiFetch, apiGetJson, apiPostJson} from "../utility/api.js";
 
 export async function login(loginRequestDTO) {
 
@@ -14,37 +14,74 @@ export async function login(loginRequestDTO) {
     });
 
     if (response.status === 401) {
-        console.log("fejlet validation");
-        showMessage("Forkert brugernavn eller adgangskode", "error");
+        console.log("Failed validation");
+        showMessage("Wrong username or password", "error");
     }
 
     if (response.ok) {
-        console.log("det virker");
+        console.log("User with username: " + loginRequestDTO.username + " was successfully logged in");
         navigate("/home");
     }
 }
 
 export async function signUp(signUpRequestDTO) {
-    const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify(signUpRequestDTO)
-    });
+   try {
+       const response = await fetch("/api/auth/signup", {
+           method: "POST",
+           credentials: "include",
+           headers: {
+               "Content-type": "application/json",
+           },
+           body: JSON.stringify(signUpRequestDTO)
+       });
 
-    if (response.status === 400) {
-        const errorText = await response.text();
-        console.log(errorText)
-        showMessage(errorText, "error");
-    }
+
+       // BAD REQUEST /Validation (MethodArgumentNotValidException)
+       if (response.status === 400) {
+           const errorText = await response.text();
+           console.log(errorText)
+           showMessage(errorText, "error");
+           return null;
+       }
+
+
+       // 409 - Conflict (DuplicateResourceException)
+       if (response.status === 409) {
+           const msg = await response.text();
+           showMessage(msg || "This user already exists.", "error");
+           return null;
+       }
+
+       // 500 - Internal Server Error (DatabaseAccessException)
+       if (response.status === 500) {
+           showMessage("A system error occurred. Please try again later.", "error");
+           return null;
+       }
+
+       if (response.ok) {
+           console.log("User created");
+           return await response.text();
+           navigate("/");
+       }
+   } catch (err) {
+       console.error("Network error:", err);
+       showMessage("Failed to connect to server.", "error");
+   }
+}
+
+export async function adminRegister (adminSignUpDTO) {
+
+    const response = await apiPostJson("/api/admin/register-employee", adminSignUpDTO);
+
+    if (!response) return;
 
     if (response.ok) {
-        console.log("User created");
-        navigate("/");
+        const savedUsername = await response.text();
+        showMessage("User with username: " + savedUsername + " was successfully registered", "info");
     }
 }
+
+
 export async function makeReservation(reservationDTO) {
     const response = await fetch("api/user/reservation", {
         method: "POST",

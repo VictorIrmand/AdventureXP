@@ -1,5 +1,3 @@
-import {updateNavHighlight} from "./highlight.js";
-
 const routes = {
     "/": () => import("../pages/login-page.js"),
     "/signup": () => import ("../pages/signup-page.js"),
@@ -7,7 +5,10 @@ const routes = {
     "/manage-activities": () => import ("../pages/admin/manage-activities-page.js"),
     "/create-activity": () => import("../pages/admin/create-activity-page.js"),
     "/update-activity": () => import ("../pages/admin/update-activity-page.js"),
-    "/manage-reservations": () => import("../pages/manage-reservations-page.js")
+    "/manage-reservations": () => import("../pages/manage-reservations-page.js"),
+    "/manage-users": () => import ("../pages/admin/manage-users-page.js"),
+    "/register-employee": () => import ("../pages/admin/register-employee-page.js"),
+    "/update-user": () => import("../pages/admin/update-user-page.js")
 }
 
 // currentUnmount bliver returneret i mount og gør at en side fjerner sig selv.
@@ -21,9 +22,14 @@ export async function route(path = location.pathname, state = null) {
     // den finder det module vi skal bruge baseret på location.pathname.
     let moduleLoader = routes[path];
 
+
+    // til requestparams der smider id på url.
     if (!moduleLoader) {
         if (path.startsWith("/update-activity/")) {
             moduleLoader = routes["/update-activity"];
+        }
+        if (path.startsWith("/update-user/")) {
+            moduleLoader = routes["/update-user"];
         }
     }
 

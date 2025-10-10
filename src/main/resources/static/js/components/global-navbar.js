@@ -83,7 +83,7 @@ function showNavLinks(targetEl, role) {
             <div><i class="fa-solid fa-gauge"></i><a href="/dashboard">Dashboard</a></div>
             <div><i class="fa-regular fa-calendar"></i><a href="/manage-reservations">Manage Reservations</a></div>
             <div><i class="fa-solid fa-dice"></i><a href="/manage-activities">Manage Activities</a></div>
-            <div><i class="fa-regular fa-user"></i><a href="/users">Manage users</a></div>
+            <div><i class="fa-regular fa-user"></i><a href="/manage-users">Manage Users</a></div>
         `;
     }
 

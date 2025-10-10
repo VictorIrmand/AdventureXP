@@ -1,4 +1,4 @@
-.manage-activities-page {
+.manage-container {
     width: 100%;
     height: 100vh;
 
@@ -6,12 +6,12 @@
     flex-direction: row;
 }
 
-.manage-activities-page .left {
+.manage-container .left {
     display: flex;
     flex: 2;
 }
 
-.manage-activities-page .center-right {
+.manage-container .center-right {
 
     display: flex;
     flex: 6;

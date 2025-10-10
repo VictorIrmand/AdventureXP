@@ -1,8 +1,8 @@
 import {signUp} from "../service/auth-service.js";
+import {showMessage} from "../utility/message.js";
 
 
 export function mount() {
-    console.log("Vi er i signup")
     /* language=HTML */
     document.querySelector("#app-main").innerHTML = `
 
@@ -68,8 +68,11 @@ export function mount() {
             email: email,
             rawPassword: rawPassword
         }
-        await signUp(signUpRequestDTO);
-    });
+        const savedId = await signUp(signUpRequestDTO);
+        if (savedId) {
+            showMessage("User with username: " + savedId + " was created. Sign in to continue.")
+        }
+        });
 
     function unmount() {
         document.querySelector("#app-main").innerHTML = "";

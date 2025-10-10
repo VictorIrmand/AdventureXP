@@ -32,6 +32,11 @@ public class DTOMapper {
     }
 
 
+    public static List<UserDTO> toUserDTOList(List<User> entityList) {
+        return entityList.stream().map(entity -> toDTO(entity)
+        ).toList();
+    }
+
 
     // activity
     public static Activity toEntity(CreateActivityDTO createActivityDTO) {

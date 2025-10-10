@@ -8,11 +8,6 @@ export async function createActivity(createActivityDTO) {
 
     if (!response) return;
 
-    if (response.status === 400) {
-        const errorMessage = await response.text();
-        showMessage(errorMessage, "error");
-    }
-
     if (response.ok) {
         const activityDTO = await response.json();
         showMessage("Activity with name: " + activityDTO.name + " was successfully created.", "info");
@@ -49,10 +44,8 @@ export async function getActivityById(id) {
 
     const activity = await apiGetJson(`/api/activities/${id}`);
 
-
-
     if (!activity) {
-        showMessage("Failed to load activities", "error");
+        showMessage("Failed to load activity", "error");
     }
     return activity;
 }
@@ -63,10 +56,6 @@ export async function updateActivity(updateActivityDTO) {
 
     if (!response) return;
 
-    if (response.status === 400) {
-        const errorMessage = await response.text();
-        showMessage(errorMessage, "error");
-    }
 
     if (response.ok) {
         const activityDTO = await response.json();
@@ -76,7 +65,7 @@ export async function updateActivity(updateActivityDTO) {
 }
 
 
-export async function getActivityDTOByFromPathId() {
+export async function getActivityDTOFromPathId() {
     const id = location.pathname.split("/").pop(); // .pop fjerner og returnere det sidste element i et array
     return getActivityById(id);
 }

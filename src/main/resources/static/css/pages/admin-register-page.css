@@ -1,0 +1,97 @@
+.admin-register-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #f9fafb;
+    font-family: system-ui, sans-serif;
+}
+
+/* Venstre navbar */
+.admin-register-page .left {
+    flex: 2;
+    border-right: 1px solid #e5e7eb;
+    background-color: #fff;
+}
+
+/* Højre side med formular */
+.admin-register-page .center-right {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Formular container */
+.admin-register-form {
+    background-color: #ffffff;
+    padding: 2.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.3rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Form grupper */
+.admin-register-form .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.4rem;
+}
+
+/* Labels */
+.admin-register-form label {
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Inputs & selects */
+.admin-register-form input,
+.admin-register-form select {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+    background-color: #f9fafb;
+}
+
+.admin-register-form input:focus,
+.admin-register-form select:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+}
+
+/* Knap */
+.admin-register-form #register-btn {
+    background-color: #22c55e;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    width: 100%;
+}
+
+.admin-register-form #register-btn:hover {
+    background-color: #16a34a;
+}
+
+/* Fejl / besked container */
+.message-container {
+    margin-top: 1rem;
+    color: #ef4444;
+    font-weight: 500;
+    text-align: center;
+}

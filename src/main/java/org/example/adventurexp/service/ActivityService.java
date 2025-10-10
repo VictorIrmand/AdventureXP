@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.adventurexp.dto.activity.ActivityDTO;
 import org.example.adventurexp.dto.activity.CreateActivityDTO;
 import org.example.adventurexp.dto.activity.UpdateActivityDTO;
+import org.example.adventurexp.exception.DatabaseAccessException;
+import org.example.adventurexp.exception.DuplicateResourceException;
 import org.example.adventurexp.exception.NotFoundException;
 import org.example.adventurexp.mapper.DTOMapper;
 import org.example.adventurexp.model.Activity;
@@ -27,17 +29,16 @@ public class ActivityService {
 
     public ActivityDTO getActivityDTOById(long id) {
         try {
-
             Activity foundActivity = activityRepository.findById(id)
-                    .orElseThrow(() ->
-                            new NotFoundException("Failed to find activity with id: " + id)
-                    );
+                    .orElseThrow(() -> {
+                        logger.warn("Failed to find activity ID: {}", id);
+                        return new NotFoundException("Activity not found");
+                    });
 
             return DTOMapper.toDTO(foundActivity);
-
         } catch (DataAccessException e) {
-            logger.error("Database problem: {}", e.getMessage());
-            throw new IllegalStateException("Database problem: " + e.getMessage());
+            logger.error("Database access error while retrieving activity with ID: {}", id, e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 
@@ -53,40 +54,60 @@ public class ActivityService {
             return saved;
 
         } catch (DataIntegrityViolationException e) {
-            logger.error("Activity with name; {} contains database constrains violations", dto.name());
-            throw new IllegalStateException("Database constrain violation; " + e.getMessage());
+            String msg = e.getMostSpecificCause().getMessage().toLowerCase();
+
+            if (msg.contains("duplicate") || msg.contains("unique") || msg.contains("constraint")) {
+                if (msg.contains("uc_activity_name")) {
+                    logger.warn("Activity with name '{}' already exists.", dto.name());
+                    throw new DuplicateResourceException("Activity name already exists");
+                } else {
+                    logger.warn("Database integrity error while saving activity '{}'.", dto.name());
+                    throw new DuplicateResourceException("The provided information conflicts with an existing activity.");
+                }
+            }
+
+            logger.error("Unhandled integrity violation while creating activity '{}'.", dto.name());
+            throw new DatabaseAccessException("A database constraint error occurred while saving activity.");
+
         } catch (DataAccessException e) {
-            logger.error("Data access error while saving activity: {}", dto.name());
-            throw new IllegalStateException("Database error; " + e.getMessage());
+            logger.error("Database access error while saving activity '{}': {}", dto.name(), e.getMessage(), e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
+
 
     public List<ActivityDTO> getAllActivities() {
         try {
             return DTOMapper.toDTOList(activityRepository.findAll());
         } catch (DataAccessException e) {
-            logger.error("Data access error while retrieving all activities: {}", e.getMessage());
-            throw new IllegalStateException("Database error; " + e.getMessage());
+            logger.error("Data access error while retrieving all activities", e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 
 
     public void deleteActivity(long id) {
         try {
+            if (!activityRepository.existsById(id)) {
+                logger.warn("Failed to find activity with ID: {}", id);
+                throw new NotFoundException("Activity not found");
+            }
             activityRepository.deleteById(id);
-        } catch (IllegalArgumentException e) {
-            logger.error("Invalid id: {}", e.getMessage());
-            throw new IllegalStateException("Invalid id");
-        } catch (DataAccessException e) {
-            logger.error("Data access error while retrieving all activities: {}", e.getMessage());
-            throw new IllegalStateException("Database error; " + e.getMessage());
+            logger.info("Activity with ID: {} was successfully deleted", id);
+        }
+        catch (DataAccessException e) {
+            logger.error("Data access error while deleting activity with ID: {}", id, e);
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 
     public ActivityDTO updateActivity(UpdateActivityDTO dto) {
         try {
             Activity existing = activityRepository.findById(dto.id())
-                    .orElseThrow(() -> new IllegalStateException("Activity not found"));
+                    .orElseThrow(() -> {
+                        logger.warn("Activity ID: {} was not found.", dto.id());
+                        return new NotFoundException("Activity not found");
+                    });
 
             // Opdater kun felter der må ændres
             existing.setName(dto.name());
@@ -99,15 +120,27 @@ public class ActivityService {
 
 
             Activity updated = activityRepository.save(existing);
-            logger.info("Activity with id {} successfully updated", dto.id());
+            logger.info("Activity with id {} was successfully updated", dto.id());
             return DTOMapper.toDTO(updated);
 
         } catch (DataIntegrityViolationException e) {
-            logger.error("Activity {} violates DB constraints", dto.name(), e);
-            throw new IllegalStateException("Database constraint violation: " + e.getMostSpecificCause().getMessage());
+            String msg = e.getMostSpecificCause().getMessage().toLowerCase();
+
+            if (msg.contains("duplicate") || msg.contains("unique") || msg.contains("constraint")) {
+                if (msg.contains("uc_activity_name")) {
+                    logger.warn("Activity with name '{}' already exists.", dto.name());
+                    throw new DuplicateResourceException("Activity name already exists");
+                } else {
+                    logger.warn("Database integrity error while updating activity '{}'.", dto.name());
+                    throw new DuplicateResourceException("The provided information conflicts with an existing activity.");
+                }
+            }
+            logger.error("Unhandled integrity violation while updating activity '{}'.", dto.name());
+            throw new DatabaseAccessException("A database constraint error occurred while saving activity.");
+
         } catch (DataAccessException e) {
             logger.error("Database access error while updating activity {}", dto.name(), e);
-            throw new IllegalStateException("Database error: " + e.getMessage());
+            throw new DatabaseAccessException("A system error occurred. Please try again later.");
         }
     }
 }
